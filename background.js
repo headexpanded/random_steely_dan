@@ -70,7 +70,7 @@ chrome.alarms.onAlarm.addListener(async () => {
       type: "basic",
       iconUrl: "img/double-helix-icon48.png",
       title: newLyric,
-      message: "5 seconds to name song, album. Go!",
+      message: "",
     });
   }
 });

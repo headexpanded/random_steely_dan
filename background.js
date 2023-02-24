@@ -8,13 +8,7 @@ const queries = [
       }
     }
   `,
-  `
-    query SteelyDanLyrics {
-  steelyDanLyrics (first: 200, skip:100){
-    lyric
-  }
-}
-  `,
+
   `
     query SteelyDanLyrics {
       steelyDanLyrics(where: {}, last: 100) {
@@ -27,7 +21,7 @@ async function getLyric(queryIndex) {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
   const fetchInterval = 2 * 60 * 1000;
-  const randomNumber = Math.floor(Math.random() * 169);
+  const randomNumber = Math.floor(Math.random() * 100);
   console.log("getLyric called");
   const query = queries[queryIndex];
 
@@ -66,8 +60,8 @@ chrome.alarms.create("steelyDanLyric", {
 
 let queryIndex = 0;
 chrome.alarms.onAlarm.addListener(async () => {
-    const newLyric = await getLyric(queryIndex);
-    queryIndex = (queryIndex + 1) % 3;
+  const newLyric = await getLyric(queryIndex);
+  queryIndex = (queryIndex + 1) % 2;
   if (newLyric) {
     console.log(newLyric);
 

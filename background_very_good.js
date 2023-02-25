@@ -33,12 +33,12 @@ const queries = [
   `,
 ];
 
-async function getSong(queryIndex) {
+async function getLyric(queryIndex) {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
   const fetchInterval = 2 * 60 * 1000;
   const randomNumber = Math.floor(Math.random() * 100);
-  console.log("getSong called");
+  console.log("getLyric called");
   const query = queries[queryIndex];
 
   if (elapsedTime >= fetchInterval) {
@@ -57,19 +57,19 @@ async function getSong(queryIndex) {
 
       const data = await response.json();
       console.log(randomNumber);
-      const song = data.data.steelyDanLyrics[randomNumber];
+      const lyric = data.data.steelyDanLyrics[randomNumber].lyric;
       lastFetchTime = currentTime;
       chrome.runtime.onMessage.addListener(async function (
         request,
         sender,
         sendResponse
       ) {
-        if (request.action === "getSong") {
-          sendResponse({ song: song });
+        if (request.action === "getLyric") {
+          sendResponse({ lyric: lyric });
         }
       });
-      // Return the song
-      return song;
+      // Return the lyric
+      return lyric;
     } catch (error) {
       console.log("There was an error:", error);
     }
@@ -89,14 +89,14 @@ chrome.alarms.onAlarm.addListener(async () => {
   });
 
   queryIndex = (queryIndex + 1) % 3;
-  const newSong = await getSong(queryIndex);
-  if (newSong) {
-    console.log(newSong);
+  const newLyric = await getLyric(queryIndex);
+  if (newLyric) {
+    console.log(newLyric);
 
     chrome.notifications.create("steelyDanLyric", {
       type: "basic",
       iconUrl: "img/double-helix-icon128.png",
-      title: newSong.lyric,
+      title: newLyric,
       message: "",
     });
   }

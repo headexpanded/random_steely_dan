@@ -1,4 +1,4 @@
-/* style sheet for Steely DAn pop-up */
+/* style sheet for Steely Dan pop-up */
 
 :root {
   /* font size */
@@ -15,38 +15,28 @@
 }
 
 html {
+  background: var(--white);
   min-height: 3rem;
   min-width: 28rem;
-  background: var(--white);
 }
 
-.wrapper {
-  min-width: 5rem;
-  /* border: 1px solid red; */
-}
-
-.lyricWrapper {
-  padding: var(--padding);
-  height: 4rem;
-  min-width: 200px;
-  /* border: 1px solid green; */
-}
-
-.lyric {
+h1 {
   font-size: 1rem;
 }
 
-.btnWrapper {
+span {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: medium;
+  padding: var(--padding);
+}
+
+.wrapper {
   display: flex;
-  justify-content: flex-end;
+  height: 4rem;
+  margin: 0.5rem 0.25rem;
+  min-width: 5rem;
 }
 
-.btn {
-  border-radius: var(--borderRadius);
-  /* border: 1px solid blue; */
-}
-
-.btn:hover {
-  cursor: pointer;
-  transform: scale(var(--scale));
+.info {
+  font-size: 1rem;
 }

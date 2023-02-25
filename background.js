@@ -1,10 +1,13 @@
 let lastFetchTime = 0;
+let queryIndex = 0;
 
 const queries = [
   `
     query SteelyDanLyrics {
       steelyDanLyrics(where: {}, first: 100) {
         lyric
+        song
+        album
       }
     }
   `,
@@ -13,6 +16,8 @@ const queries = [
     query SteelyDanLyrics {
       steelyDanLyrics(where: {}, first: 100, skip:100) {
         lyric
+        song
+        album
       }
     }
   `,
@@ -21,10 +26,13 @@ const queries = [
     query SteelyDanLyrics {
       steelyDanLyrics(where: {}, last: 100) {
         lyric
+        song
+        album
       }
     }
   `,
 ];
+
 async function getLyric(queryIndex) {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
@@ -71,18 +79,27 @@ chrome.alarms.onAlarm.addListener(async () => {
     when: Date.now() + 1 * 60 * 60 * 1000, // Set the alarm to trigger in one hour
   });
 
-  // Your existing code for fetching the lyric and creating the notification
-  const newLyric = await getLyric(queryIndex);
-  queryIndex = (queryIndex + 1) % 3;
-  if (newLyric) {
-    console.log(newLyric);
+  chrome.tabs.query(
+    { active: true, currentWindow: true },
+    async function (tabs) {
+      queryIndex = (queryIndex + 1) % 3;
+      const newLyric = await getLyric(queryIndex);
+      if (newLyric) {
+        console.log(newLyric);
 
-    // Create notification
-    chrome.notifications.create("steelyDanLyric", {
-      type: "basic",
-      iconUrl: "img/double-helix-icon128.png",
-      title: newLyric,
-      message: "",
-    });
-  }
+        chrome.notifications.create(
+          "steelyDanLyric",
+          {
+            type: "basic",
+            iconUrl: "img/double-helix-icon128.png",
+            title: newLyric,
+            message: "",
+          },
+          function () {
+            chrome.tabs.sendMessage(tabs[0].id, { lyric: newLyric });
+          }
+        );
+      }
+    }
+  );
 });

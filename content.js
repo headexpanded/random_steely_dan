@@ -4,5 +4,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("From background.js");
   console.log(request.lyric);
   const infoSpan = document.getElementById("info");
-  infoSpan.textContent = `The most recent random lyric (last 24 hours) was ${lyric}`;
+  infoSpan.textContent = `The most recent random lyric (last 24 hours) was ${request.lyric}`;
 });

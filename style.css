@@ -27,13 +27,13 @@ h1 {
 span {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: medium;
-  padding: var(--padding);
+  /* padding: var(--padding); */
 }
 
 .wrapper {
   display: flex;
   height: 4rem;
-  margin: 0.5rem 0.25rem;
+  margin-top: 0.5rem;
   min-width: 5rem;
 }
 

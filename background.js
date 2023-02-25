@@ -96,7 +96,7 @@ chrome.alarms.onAlarm.addListener(async () => {
             message: "",
           },
           function () {
-            chrome.tabs.sendMessage(tabs[0].id, { lyric: newLyric });
+            chrome.tabs.sendMessage({ lyric: newLyric });
           }
         );
       }

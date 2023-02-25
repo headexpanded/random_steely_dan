@@ -11,14 +11,6 @@ const queries = [
 
   `
     query SteelyDanLyrics {
-      steelyDanLyrics(where: {}, first: 100, skip:100) {
-        lyric
-      }
-    }
-  `,
-
-  `
-    query SteelyDanLyrics {
       steelyDanLyrics(where: {}, last: 100) {
         lyric
       }
@@ -61,19 +53,15 @@ async function getLyric(queryIndex) {
   }
 }
 
+// Create the alarm for the next notification
 chrome.alarms.create("steelyDanLyric", {
-  when: Date.now() + Math.floor(Math.random() * 1 * 60 * 60 * 1000), // Set a random time for the alarm to trigger within the next hour
+  periodInMinutes: 2,
 });
 
+let queryIndex = 0;
 chrome.alarms.onAlarm.addListener(async () => {
-  // Reset the alarm for the next day
-  chrome.alarms.create("steelyDanLyric", {
-    when: Date.now() + 1 * 60 * 60 * 1000, // Set the alarm to trigger in one hour
-  });
-
-  // Your existing code for fetching the lyric and creating the notification
   const newLyric = await getLyric(queryIndex);
-  queryIndex = (queryIndex + 1) % 3;
+  queryIndex = (queryIndex + 1) % 2;
   if (newLyric) {
     console.log(newLyric);
 

@@ -2,31 +2,35 @@
 // Display it in the popup
 
 const infoSpan = document.getElementById("info");
-const resultText = `The most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
 const noResultText = `There's no lyric to show right now. Check back in an hour or two.`;
 
-chrome.runtime.sendMessage({ action: "getSong" }, function (response) {
-  if (response) {
-    const song = response.song;
+document.addEventListener("DOMContentLoaded", function () {
+  /* chrome.runtime.sendMessage({ action: "getSong" }, function (response) {
+    if (response) {
+      const song = response.song;
+      infoSpan.textContent = `The most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
 
-    // Store the response in local storage so we can display it in the popup even
-    // if the user clicks the button more than once
-    infoSpan.textContent = resultText;
-    // localStorage.setItem("lastSong", JSON.stringify(response.song));
-    chrome.storage.local.set({ songData: song }, function () {
-      console.log("Stored song locally");
-    });
-  } else {
-    infoSpan.textContent = noResultText;
-    console.log("No response so far");
-  }
+      // Store the response in local storage so we can display it in the popup even
+      // if the user clicks the button more than once
+      chrome.storage.local.set({ songData: song }, function () {
+        console.log("Stored song locally");
+      });
+    } else {
+      infoSpan.textContent = noResultText;
+      console.log("No response so far");
+    }
+  }); */
+  /* chrome.storage.local.get("songData", function (data) {
+    const song = data.songData;
+    // Update popup HTML with song data
+  }); */
 });
 
 // Get locally stored song when the user clicks the extension button again
 
-chrome.local?.storage?.get(["songData"], function (result) {
+chrome.local.storage.get(["songData"], function (result) {
   if (result.songData) {
-    infoSpan.textContent = resultText;
+    infoSpan.textContent = `The most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
   } else {
     infoSpan.textContent = noResultText;
     console.log("No response so far");

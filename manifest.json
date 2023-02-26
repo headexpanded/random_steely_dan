@@ -25,7 +25,7 @@
       "js": ["content.js"]
     }
   ],
-  "permissions": ["alarms", "notifications"],
+  "permissions": ["alarms", "notifications", "storage"],
   "background": {
     "service_worker": "background.js"
   }

@@ -59,7 +59,9 @@ async function getSong(queryIndex) {
       console.log(randomNumber);
       const song = data.data.steelyDanLyrics[randomNumber];
       lastFetchTime = currentTime;
-      chrome.runtime.onMessage.addListener(async function (
+
+      // send song data to content.js
+      /* chrome.runtime.onMessage.addListener(async function (
         request,
         sender,
         sendResponse
@@ -67,7 +69,9 @@ async function getSong(queryIndex) {
         if (request.action === "getSong") {
           sendResponse({ song: song });
         }
-      });
+      }); */
+      chrome.storage.local.set({ songData: song });
+      console.log("Data stored locally: " + song);
       // Return the song
       return song;
     } catch (error) {

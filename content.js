@@ -1,7 +1,11 @@
 // Get the most recently displayed lyric from background.js
 // Display it in the popup
 
-const infoSpan = document.getElementById("info");
+const lyricSpan = document.getElementById("lyric");
+const songSpan = document.getElementById("song");
+const albumSpan = document.getElementById("album");
+
+const cover = document.getElementById("cover");
 const noResultText = `There's no lyric to show right now. Check back in an hour or two.`;
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -30,8 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 chrome.storage.local.get("songData", function (result) {
   if (result.songData) {
-    infoSpan.textContent = `Your most recent random lyric was "${result.songData.lyric}", a line from ${result.songData.song} which is on ${result.songData.album}`;
+    lyricSpan.textContent = `${result.songData.lyric}`;
+    songSpan.textContent = `Song: ${result.songData.song}`;
+    albumSpan.textContent = `Album: ${result.songData.album}`;
+    cover.textContent = `${result.songData.albumId}`;
   } else {
-    infoSpan.textContent = "Storage get not working";
+    lyricSpan.textContent = "Storage get not working";
+    cover.textContent = "This is where the album cover art goes";
   }
 });

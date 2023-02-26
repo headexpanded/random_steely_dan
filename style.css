@@ -6,7 +6,7 @@
 
   /* color variables */
   --white: #fdffff;
-  --darkBlue: #001e3d;
+  --darkFont: #001429;
 
   /* layout variables */
   --borderRadius: 4px;
@@ -18,28 +18,60 @@ html {
   background: var(--white);
   min-height: 3rem;
   min-width: 28rem;
+  user-select: none;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+img {
+  max-width: 100%;
 }
 
 h1 {
-  font-size: 1rem;
+  font-family: "Michroma", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 0px;
+  text-align: center;
 }
 
-span {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: medium;
-  /* padding: var(--padding); */
+.y{
+  /* this is for the Y in the h1 - the font makes it stick out too much otherwise */
+  margin-left: -.5rem;
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
   height: 4rem;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   min-width: 5rem;
+  color: var(--darkFont);
+  text-align: center;
 }
 
-.info {
+.intro {
+  margin-bottom: 0px;
+}
+
+.lyric {
   font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0rem;
+}
+
+.songAlbumWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.song,
+.album,
+.twitter
+{
+  font-size: 0.75rem;
 }
 
 .cover {

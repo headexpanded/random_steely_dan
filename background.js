@@ -72,6 +72,17 @@ async function getSong(queryIndex) {
         }
       });
 
+      // get ready to tweet it
+      const tweetText = song.lyric;
+      const twitterApiUrl = "https://api.twitter.com/1.1/statuses/update.json";
+      const twitterHeaders = new Headers({
+        Authorization: "Bearer " + twitterAccessToken,
+        "Content-Type": "application/x-www-form-urlencoded",
+      });
+      const twitterBody = new URLSearchParams({
+        status: tweetText,
+      });
+
       // Return the song
       return song;
     } catch (error) {

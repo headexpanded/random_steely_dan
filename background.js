@@ -8,6 +8,7 @@ const queries = [
         lyric
         song
         album
+        albumId
       }
     }
   `,
@@ -18,6 +19,7 @@ const queries = [
         lyric
         song
         album
+        albumId
       }
     }
   `,
@@ -28,6 +30,7 @@ const queries = [
         lyric
         song
         album
+        albumId
       }
     }
   `,
@@ -38,7 +41,6 @@ async function getSong(queryIndex) {
   const elapsedTime = currentTime - lastFetchTime;
   const fetchInterval = 2 * 60 * 1000;
   const randomNumber = Math.floor(Math.random() * 100);
-  console.log("getSong called");
   const query = queries[queryIndex];
 
   if (elapsedTime >= fetchInterval) {
@@ -56,12 +58,11 @@ async function getSong(queryIndex) {
       );
 
       const data = await response.json();
-      console.log(randomNumber);
       const song = data.data.steelyDanLyrics[randomNumber];
       lastFetchTime = currentTime;
 
       // send song data to content.js
-      /* chrome.runtime.onMessage.addListener(async function (
+      chrome.runtime.onMessage.addListener(async function (
         request,
         sender,
         sendResponse
@@ -69,9 +70,8 @@ async function getSong(queryIndex) {
         if (request.action === "getSong") {
           sendResponse({ song: song });
         }
-      }); */
-      chrome.storage.local.set({ songData: song });
-      console.log("Data stored locally: " + song);
+      });
+
       // Return the song
       return song;
     } catch (error) {
@@ -87,7 +87,7 @@ chrome.alarms.create("steelyDanLyric", {
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
-  // Reset the alarm for the next day
+  // Reset the alarm for the next time
   chrome.alarms.create("steelyDanLyric", {
     when: Date.now() + 1 * 60 * 60 * 1000, // Set the alarm to trigger in one hour
   });
@@ -95,13 +95,13 @@ chrome.alarms.onAlarm.addListener(async () => {
   queryIndex = (queryIndex + 1) % 3;
   const newSong = await getSong(queryIndex);
   if (newSong) {
-    console.log(newSong);
-
     chrome.notifications.create("steelyDanLyric", {
       type: "basic",
       iconUrl: "img/double-helix-icon128.png",
       title: newSong.lyric,
       message: "",
     });
+
+    chrome.storage.local.set({ songData: newSong });
   }
 });

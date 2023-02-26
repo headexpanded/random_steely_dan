@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /* chrome.runtime.sendMessage({ action: "getSong" }, function (response) {
     if (response) {
       const song = response.song;
-      infoSpan.textContent = `The most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
+      infoSpan.textContent = `Your most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
 
       // Store the response in local storage so we can display it in the popup even
       // if the user clicks the button more than once
@@ -28,11 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Get locally stored song when the user clicks the extension button again
 
-chrome.local.storage.get(["songData"], function (result) {
+chrome.storage.local.get("songData", function (result) {
   if (result.songData) {
-    infoSpan.textContent = `The most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
+    infoSpan.textContent = `Your most recent random lyric was "${result.songData.lyric}", a line from ${result.songData.song} which is on ${result.songData.album}`;
   } else {
-    infoSpan.textContent = noResultText;
-    console.log("No response so far");
+    infoSpan.textContent = "Storage get not working";
   }
 });

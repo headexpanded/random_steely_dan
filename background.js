@@ -1,7 +1,7 @@
 let lastFetchTime = 0;
 let queryIndex = 0;
 
-const queries = [
+const lyricQueries = [
   `
     query SteelyDanLyrics {
       steelyDanLyrics(where: {}, first: 100) {
@@ -36,12 +36,20 @@ const queries = [
   `,
 ];
 
+const albumCoverQuery = `query albumCoverQuery {
+  steelyDanAlbums(where: {album_id: 2}) {
+    cover {
+      url
+    }
+  }
+}`;
+
 async function getSong(queryIndex) {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
   const fetchInterval = 2 * 60 * 1000;
   const randomNumber = Math.floor(Math.random() * 100);
-  const query = queries[queryIndex];
+  const query = lyricQueries[queryIndex];
 
   if (elapsedTime >= fetchInterval) {
     try {
@@ -93,6 +101,32 @@ async function getSong(queryIndex) {
   }
 }
 
+async function getCover() {
+  try {
+    const query = albumCoverQuery;
+    const response = await fetch(
+      "https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ query }),
+      }
+    );
+
+    const data = await response.json();
+    const albumCover = data.data.steelyDanAlbums[0];
+    console.log(albumCover.cover.url);
+
+    // Return the album cover
+    return albumCover;
+  } catch (error) {
+    console.log("There was an error:", error);
+  }
+}
+
 chrome.alarms.create("steelyDanLyric", {
   when: Date.now() + Math.floor(Math.random() * 1 * 60 * 60 * 1000), // Set a random time for the alarm to trigger within the next hour
 });
@@ -112,7 +146,11 @@ chrome.alarms.onAlarm.addListener(async () => {
       title: newSong.lyric,
       message: "",
     });
+    const albumCover = await getCover();
 
     chrome.storage.local.set({ songData: newSong });
+    if (albumCover) {
+      chrome.storage.local.set({ albumCover: albumCover });
+    }
   }
 });

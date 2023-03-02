@@ -17,7 +17,7 @@
 html {
   background: var(--white);
   min-height: 3rem;
-  min-width: 28rem;
+  min-width: 22rem;
   user-select: none;
 }
 
@@ -36,9 +36,9 @@ h1 {
   text-align: center;
 }
 
-.y{
+.y {
   /* this is for the Y in the h1 - the font makes it stick out too much otherwise */
-  margin-left: -.5rem;
+  margin-left: -0.5rem;
 }
 
 .wrapper {
@@ -69,11 +69,20 @@ h1 {
 
 .song,
 .album,
-.twitter
-{
+.twitter {
   font-size: 0.75rem;
+}
+
+.credit {
+  margin-bottom: 0.5rem;
 }
 
 .cover {
   min-height: 320px;
+}
+
+.albumCover {
+  height: 300px;
+  padding: 0.5rem;
+  width: 300px;
 }

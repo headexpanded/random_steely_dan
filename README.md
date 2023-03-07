@@ -2,6 +2,6 @@
 
 A Chrome extension which displays a random Steely Dan lyric snippet at some random time every 8 hours. And then [tweets it](https://twitter.com/randomsteelydan)
 
-Submitted for review in early March 2023.
+March 2023 : submitted to Chrome for review.
 
 

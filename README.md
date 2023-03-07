@@ -2,7 +2,7 @@
 
 ![Steely Dan cover art](https://media.graphassets.com/zXHP7H3RzWK8gzEqyJLx)]
 
-A Chrome extension which displays a random Steely Dan lyric snippet at some random time every 8 hours. And then [tweets it](https://twitter.com/randomsteelydan)
+A Chrome extension which displays a random Steely Dan lyric snippet as a browser notification every 8 hours. And then [tweets it](https://twitter.com/randomsteelydan)
 
 - HTML, CSS, JavaScript, GraphQL 
 

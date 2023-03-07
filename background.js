@@ -47,7 +47,7 @@ const albumCoverQuery = `query albumCoverQuery {
 async function getSong(queryIndex) {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
-  const fetchInterval = 2 * 60 * 1000;
+  const fetchInterval = 8 * 60 * 1000;
   const randomNumber = Math.floor(Math.random() * 100);
   const query = lyricQueries[queryIndex];
 
@@ -128,13 +128,13 @@ async function getCover() {
 }
 
 chrome.alarms.create("steelyDanLyric", {
-  when: Date.now() + Math.floor(Math.random() * 1 * 60 * 60 * 1000), // Set a random time for the alarm to trigger within the next hour
+  when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000), // Set a random time for the alarm to trigger within the next hour
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
   // Reset the alarm for the next time
   chrome.alarms.create("steelyDanLyric", {
-    when: Date.now() + 1 * 60 * 60 * 1000, // Set the alarm to trigger in one hour
+    when: Date.now() + 8 * 60 * 60 * 1000, // Set the alarm to trigger in one hour
   });
 
   queryIndex = (queryIndex + 1) % 3;

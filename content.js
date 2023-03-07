@@ -9,7 +9,6 @@ const albumCoverImg = document.getElementById("albumCoverImg");
 const cover = document.getElementById("cover");
 const noResultText = `There's no lyric to show right now. Check back in an hour or two.`;
 
-document.addEventListener("DOMContentLoaded", function () {
   /* chrome.runtime.sendMessage({ action: "getSong" }, function (response) {
     if (response) {
       const song = response.song;
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const song = data.songData;
     // Update popup HTML with song data
   }); */
-});
+
 
 // Get locally stored song when the user clicks the extension button
 

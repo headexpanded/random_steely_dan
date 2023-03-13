@@ -9,27 +9,6 @@ const albumCoverImg = document.getElementById("albumCoverImg");
 const cover = document.getElementById("cover");
 const noResultText = `There's no lyric to show right now. Check back in an hour or two.`;
 
-  /* chrome.runtime.sendMessage({ action: "getSong" }, function (response) {
-    if (response) {
-      const song = response.song;
-      infoSpan.textContent = `Your most recent random lyric was "${song.lyric}", a line from ${song.song}, which is on ${song.album}`;
-
-      // Store the response in local storage so we can display it in the popup even
-      // if the user clicks the button more than once
-      chrome.storage.local.set({ songData: song }, function () {
-        console.log("Stored song locally");
-      });
-    } else {
-      infoSpan.textContent = noResultText;
-      console.log("No response so far");
-    }
-  }); */
-  /* chrome.storage.local.get("songData", function (data) {
-    const song = data.songData;
-    // Update popup HTML with song data
-  }); */
-
-
 // Get locally stored song when the user clicks the extension button
 
 chrome.storage.local.get("songData", function (result) {
@@ -86,9 +65,8 @@ chrome.storage.local.get("songData", function (result) {
 
 chrome.storage.local.get("albumCover", function (data) {
   if (data.albumCover) {
-    // albumCoverImg.src = `${data.albumCover.cover.url}`;
     console.log(data.albumCover.cover.url);
   } else {
-    // albumCoverImg.src = "https://media.graphassets.com/A6KPJzROS16gm8dlzXqQ";
+    console.log("Data error");
   }
 });

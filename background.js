@@ -36,14 +36,6 @@ const lyricQueries = [
   `,
 ];
 
-const albumCoverQuery = `query albumCoverQuery {
-  steelyDanAlbums(where: {album_id: 2}) {
-    cover {
-      url
-    }
-  }
-}`;
-
 async function getSong(queryIndex) {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
@@ -69,16 +61,6 @@ async function getSong(queryIndex) {
       const song = data.data.steelyDanLyrics[randomNumber];
       lastFetchTime = currentTime;
 
-      // send song data to content.js
-      chrome.runtime.onMessage.addListener(async function (
-        request,
-        sendResponse
-      ) {
-        if (request.action === "getSong") {
-          sendResponse({ song: song });
-        }
-      });
-
       // Return the song
       return song;
     } catch (error) {
@@ -86,32 +68,6 @@ async function getSong(queryIndex) {
     }
   } else {
     console.log("Fetch call skipped");
-  }
-}
-
-async function getCover() {
-  try {
-    const query = albumCoverQuery;
-    const response = await fetch(
-      "https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ query }),
-      }
-    );
-
-    const data = await response.json();
-    const albumCover = data.data.steelyDanAlbums[0];
-    console.log(albumCover.cover.url);
-
-    // Return the album cover
-    return albumCover;
-  } catch (error) {
-    console.log("There was an error:", error);
   }
 }
 
@@ -134,11 +90,6 @@ chrome.alarms.onAlarm.addListener(async () => {
       title: newSong.lyric,
       message: "",
     });
-    const albumCover = await getCover();
-
     chrome.storage.local.set({ songData: newSong });
-    if (albumCover) {
-      chrome.storage.local.set({ albumCover: albumCover });
-    }
   }
 });

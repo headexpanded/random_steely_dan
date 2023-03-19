@@ -20,32 +20,32 @@ chrome.storage.local.get("songData", function (result) {
     // get the album's cover art
     switch (albumId) {
       case 1:
-        albumCoverImg.src =
-          "https://media.graphassets.com/A6KPJzROS16gm8dlzXqQ";
+        albumCoverImg.src = "/img/covers/album_cover_1.jpg";
+        // "https://media.graphassets.com/A6KPJzROS16gm8dlzXqQ";
         break;
       case 2:
-        albumCoverImg.src =
-          "https://media.graphassets.com/ZcEyeqTaSXxd4H9DUD0A";
+        albumCoverImg.src = "/img/covers/album_cover_2.jpg";
+        //"https://media.graphassets.com/ZcEyeqTaSXxd4H9DUD0A";
         break;
       case 3:
-        albumCoverImg.src =
-          "https://media.graphassets.com/EDTJvljMTMepDVTyToEy";
+        albumCoverImg.src = "/img/covers/album_cover_3.jpg";
+        //"https://media.graphassets.com/EDTJvljMTMepDVTyToEy";
         break;
       case 4:
-        albumCoverImg.src =
-          "https://media.graphassets.com/IqTx4rn0RyC7CCP7T9pL";
+        albumCoverImg.src = "/img/covers/album_cover_4.jpg";
+        //"https://media.graphassets.com/IqTx4rn0RyC7CCP7T9pL";
         break;
       case 5:
-        albumCoverImg.src =
-          "https://media.graphassets.com/zexJDVXdRMaZaTvg5lig";
+        albumCoverImg.src = "/img/covers/album_cover_5.jpg";
+        // "https://media.graphassets.com/zexJDVXdRMaZaTvg5lig";
         break;
       case 6:
-        albumCoverImg.src =
-          "https://media.graphassets.com/rH3GtyBaRtm6HKG4vDx6";
+        albumCoverImg.src = "/img/covers/album_cover_6.jpg";
+        //  "https://media.graphassets.com/rH3GtyBaRtm6HKG4vDx6";
         break;
       case 7:
-        albumCoverImg.src =
-          "https://media.graphassets.com/vGopQO4xQ2WAf43JlJrx";
+        albumCoverImg.src = "/img/covers/album_cover_7.jpg";
+        // "https://media.graphassets.com/vGopQO4xQ2WAf43JlJrx";
         break;
       case 8:
         albumCoverImg.src =
@@ -56,8 +56,8 @@ chrome.storage.local.get("songData", function (result) {
           "https://media.graphassets.com/Uk751ZwLTSk0PCjSZr7M";
         break;
       default:
-        albumCoverImg.src =
-          "https://media.graphassets.com/A6KPJzROS16gm8dlzXqQ";
+        albumCoverImg.src = "/img/covers/album_cover_1.jpg";
+      //  "https://media.graphassets.com/A6KPJzROS16gm8dlzXqQ";
     }
   } else {
     lyricSpan.textContent = "Lyric goes here.";

@@ -1,5 +1,28 @@
+/* 
+A Chrome extension which puts a random lyric by Steely Dan in a browser notification
+HTML, CSS, JS, TS
 
+- the extension sets an alarm every 8 hours
+- the alarm event listener calls the getSong function
+- getSong selects one of three queries to a HiGraph query object
+- (1st 100 results, 2nd 100 results, last 100 results: this is to get around HiGraph's 100 return limit)
 
+- getSong returns a song object, which includes:
+  1/ a lyric snippet
+  2/ the song from which the lyric snippet is sourced
+  3/ the album upon which the song appears
+
+- the song object populates a basic Chrome browser notification with the lyric snippet
+- the song object is stored in local storage, over-writing any previous song object
+
+- if the user clicks the extension button:
+  1/ the song object is returned from local storage
+  2/ an HTML pop-up displays:
+    1/ the lyric snippet
+    2/ the song from which the lyric snippet is sourced
+    3/ the name of the album upon which the song appears
+    4/ the cover art of the album
+*/
 
 let lastFetchTime = 0;
 let queryIndex = 0;

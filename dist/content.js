@@ -27,7 +27,7 @@ chrome.storage.local.get("songData", function (result) {
                 break;
             case 3:
                 albumCoverImg.src = chrome.runtime.getURL("/img/covers/album_cover_3.jpg");
-                albumCoverImg.alt = chrome.runtime.getURL("Pretzel Logic cover art");
+                albumCoverImg.alt = "Pretzel Logic cover art";
                 break;
             case 4:
                 albumCoverImg.src = chrome.runtime.getURL("/img/covers/album_cover_4.jpg");
@@ -46,13 +46,16 @@ chrome.storage.local.get("songData", function (result) {
                 albumCoverImg.alt = "Gaucho cover art";
                 break;
             case 8:
-                albumCoverImg.src = chrome.runtime.getURL("https://media.graphassets.com/DdHAZfEwQqW0gUUKIC7f");
+                albumCoverImg.src = chrome.runtime.getURL("/img/covers/album_cover_8.jpg");
+                albumCoverImg.alt = "Decade cover art";
                 break;
             case 9:
-                albumCoverImg.src = chrome.runtime.getURL("https://media.graphassets.com/Uk751ZwLTSk0PCjSZr7M");
+                albumCoverImg.src = chrome.runtime.getURL("/img/covers/album_cover_9.jpg");
+                albumCoverImg.alt = "Gold cover art";
                 break;
             default:
                 albumCoverImg.src = chrome.runtime.getURL("/img/covers/album_cover_1.jpg");
+                albumCoverImg.alt = "Default cover art";
         }
     }
     else {

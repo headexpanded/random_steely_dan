@@ -26,6 +26,6 @@
   ],
   "permissions": ["alarms", "notifications", "storage"],
   "background": {
-    "service_worker": "qbackground.js"
+    "service_worker": "background.js"
   }
 }

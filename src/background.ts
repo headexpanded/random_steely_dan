@@ -11,9 +11,10 @@ HTML, CSS, TS, JS
   1/ a lyric snippet
   2/ the song from which the lyric snippet is sourced
   3/ the album upon which the song appears
+  4/ the albumId (1-9)
 
 - the song object populates a basic Chrome browser notification with the lyric snippet
-- the song object is stored in local storage, over-writing any previous song object
+- the song object is stored in local storage, over-writing the previously stored song object
 
 - if the user clicks the extension button:
   1/ the song object is returned from local storage
@@ -105,7 +106,8 @@ async function getSong(queryIndex: number) {
       const songData: songData = await response.json();
       // HiGraph applies a long random string to each entry as an iD
       // we can't use that to select from an array.
-      // so we use the random number(0..100) instead
+      // so instead we use the random number {0..100}
+      // to select one song from the array
       const song: Song = songData.data.steelyDanItems[randomNumber];
       lastFetchTime = currentTime;
 
@@ -127,10 +129,12 @@ chrome.alarms.create("steelyDanItem", {
 chrome.alarms.onAlarm.addListener(async () => {
   // Reset the alarm for the next time
   chrome.alarms.create("steelyDanItem", {
-    when: Date.now() + 0.25 * 60 * 60 * 1000, // Set the alarm to trigger in 8 hours
+    when: Date.now() + 0.25 * 60 * 60 * 1000,
   });
 
-  // set query index to 1, 2, or 3
+  // Setting the query index to 1, 2, or 3
+  // allows us to get any song from the +250 items in the db
+  // despite HiGraph limiting returns to only 100 items
   queryIndex = (queryIndex + 1) % 3;
 
   const newSong = await getSong(queryIndex);
@@ -141,6 +145,7 @@ chrome.alarms.onAlarm.addListener(async () => {
       title: newSong.lyric,
       message: "",
     });
+
     chrome.storage.local.set({ songData: newSong });
   }
 });

@@ -90,8 +90,8 @@ async function getSong(queryIndex: number) {
         }
       );
 
-      const data = await response.json();
-      const song: Song = data.data.steelyDanLyrics[randomNumber];
+      const songData = await response.json();
+      const song: Song = songData.data.steelyDanLyrics[randomNumber];
       lastFetchTime = currentTime;
 
       // Return the song

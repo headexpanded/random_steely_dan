@@ -22,43 +22,62 @@ chrome.storage.local.get("songData", function (result) {
     // get the album's cover art
     switch (albumId) {
       case 1:
-        albumCoverImg.src = "/img/covers/album_cover_1.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_1.jpg"
+        );
         albumCoverImg.alt = "Can't Buy A Thrill cover art";
         break;
       case 2:
-        albumCoverImg.src = "/img/covers/album_cover_2.jpg";
+        //albumCoverImg.src = "/img/covers/album_cover_2.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_2.jpg"
+        );
         albumCoverImg.alt = "Countdown To Ecstasy cover art";
         break;
       case 3:
-        albumCoverImg.src = "/img/covers/album_cover_3.jpg";
-        albumCoverImg.alt = "Pretzel Logic cover art";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_3.jpg"
+        );
+        albumCoverImg.alt = chrome.runtime.getURL("Pretzel Logic cover art");
         break;
       case 4:
-        albumCoverImg.src = "/img/covers/album_cover_4.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_4.jpg"
+        );
         albumCoverImg.alt = "Katy Lied cover art";
         break;
       case 5:
-        albumCoverImg.src = "/img/covers/album_cover_5.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_5.jpg"
+        );
         albumCoverImg.alt = "The Royal Scam cover art";
         break;
       case 6:
-        albumCoverImg.src = "/img/covers/album_cover_6.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_6.jpg"
+        );
         albumCoverImg.alt = "Aja cover art";
         break;
       case 7:
-        albumCoverImg.src = "/img/covers/album_cover_7.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_7.jpg"
+        );
         albumCoverImg.alt = "Gaucho cover art";
         break;
       case 8:
-        albumCoverImg.src =
-          "https://media.graphassets.com/DdHAZfEwQqW0gUUKIC7f";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "https://media.graphassets.com/DdHAZfEwQqW0gUUKIC7f"
+        );
         break;
       case 9:
-        albumCoverImg.src =
-          "https://media.graphassets.com/Uk751ZwLTSk0PCjSZr7M";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "https://media.graphassets.com/Uk751ZwLTSk0PCjSZr7M"
+        );
         break;
       default:
-        albumCoverImg.src = "/img/covers/album_cover_1.jpg";
+        albumCoverImg.src = chrome.runtime.getURL(
+          "/img/covers/album_cover_1.jpg"
+        );
     }
   } else {
     lyricSpan.textContent = "Lyric goes here.";

@@ -61,7 +61,7 @@ const lyricQueries = [
 async function getSong(queryIndex) {
     const currentTime = Date.now();
     const elapsedTime = currentTime - lastFetchTime;
-    const fetchInterval = 8 * 60 * 1000;
+    const fetchInterval = 0.25 * 60 * 1000;
     const randomNumber = Math.floor(Math.random() * 100);
     const query = lyricQueries[queryIndex];
     if (elapsedTime >= fetchInterval) {
@@ -74,8 +74,8 @@ async function getSong(queryIndex) {
                 },
                 body: JSON.stringify({ query }),
             });
-            const data = await response.json();
-            const song = data.data.steelyDanLyrics[randomNumber];
+            const songData = await response.json();
+            const song = songData.data.steelyDanLyrics[randomNumber];
             lastFetchTime = currentTime;
             // Return the song
             return song;
@@ -90,12 +90,12 @@ async function getSong(queryIndex) {
 }
 chrome.alarms.create("steelyDanLyric", {
     // Set the alarm to trigger in the next 8 hours
-    when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
+    when: Date.now() + Math.floor(Math.random() * 0.25 * 60 * 60 * 1000),
 });
 chrome.alarms.onAlarm.addListener(async () => {
     // Reset the alarm for the next time
     chrome.alarms.create("steelyDanLyric", {
-        when: Date.now() + 8 * 60 * 60 * 1000, // Set the alarm to trigger in 8 hours
+        when: Date.now() + 0.25 * 60 * 60 * 1000, // Set the alarm to trigger in 8 hours
     });
     // set query index to 1, 2, or 3
     queryIndex = (queryIndex + 1) % 3;

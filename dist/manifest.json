@@ -18,10 +18,10 @@
     },
     "default_popup": "popup.html"
   },
-  "host_permissions": ["*://*/*"],
+
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["<all_urls>"],
       "css": ["style.css"],
       "js": ["content.js"]
     }

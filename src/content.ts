@@ -16,7 +16,7 @@ const noResultText: string = `There's no lyric to show right now. Check back in 
 chrome.storage.local.get("songData", function (result) {
   if (result.songData) {
     lyricSpan.textContent = `${result.songData.lyric}`;
-    songSpan.textContent = `Song: ${result.songData.song}`;
+    songSpan.textContent = `Song: ${result.songData.song_name}`;
     albumSpan.textContent = `Album: ${result.songData.album}`;
     const albumId: number = result.songData.albumId;
     // get the album's cover art

@@ -27,6 +27,13 @@ HTML, CSS, TS, JS
 let lastFetchTime: number = 0;
 let queryIndex: number = 0;
 
+interface Song {
+  lyric: string;
+  song_name: string;
+  album: string;
+  albumId: number;
+}
+
 const lyricQueries: string[] = [
   `
     query SteelyDanLyrics {
@@ -84,7 +91,7 @@ async function getSong(queryIndex: number) {
       );
 
       const data = await response.json();
-      const song = data.data.steelyDanLyrics[randomNumber];
+      const song: Song = data.data.steelyDanLyrics[randomNumber];
       lastFetchTime = currentTime;
 
       // Return the song

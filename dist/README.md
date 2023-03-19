@@ -4,9 +4,9 @@
 
 A Chrome extension which displays a random Steely Dan lyric snippet as a browser notification every 8 hours.
 
-- Future version will [tweet it](https://twitter.com/randomsteelydan)
+- A future version will [tweet it](https://twitter.com/randomsteelydan)
 
-- HTML, CSS, JavaScript, GraphQL 
+- HTML, CSS, TypeScript, JavaScript, GraphQL
 
 - March 2023 : submitted to Chrome for review.
 

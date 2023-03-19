@@ -1,7 +1,7 @@
 "use strict";
 /*
 A Chrome extension which puts a random lyric by Steely Dan in a browser notification
-HTML, CSS, JS, TS
+HTML, CSS, TS, JS
 
 - the extension sets an alarm every 8 hours
 - the alarm event listener calls the getSong function

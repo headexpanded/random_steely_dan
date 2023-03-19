@@ -42,12 +42,12 @@ h1 {
 }
 
 .wrapper {
+  color: var(--darkFont);
   display: flex;
   flex-direction: column;
   height: 4rem;
   margin-top: 0.25rem;
   min-width: 5rem;
-  color: var(--darkFont);
   text-align: center;
 }
 

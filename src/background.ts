@@ -72,7 +72,7 @@ const lyricQueries: string[] = [
 async function getSong(queryIndex: number) {
   const currentTime: number = Date.now();
   const elapsedTime: number = currentTime - lastFetchTime;
-  const fetchInterval: number = 1 * 60 * 1000;
+  const fetchInterval: number = 8 * 60 * 1000;
   const randomNumber: number = Math.floor(Math.random() * 100);
   const query: string = lyricQueries[queryIndex];
 
@@ -106,13 +106,13 @@ async function getSong(queryIndex: number) {
 
 chrome.alarms.create("steelyDanLyric", {
   // Set the alarm to trigger in the next 8 hours
-  when: Date.now() + Math.floor(Math.random() * 1 * 60 * 60 * 1000),
+  when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
   // Reset the alarm for the next time
   chrome.alarms.create("steelyDanLyric", {
-    when: Date.now() + 1 * 60 * 60 * 1000, // Set the alarm to trigger in 8 hours
+    when: Date.now() + 8 * 60 * 60 * 1000, // Set the alarm to trigger in 8 hours
   });
 
   // set query index to 1, 2, or 3

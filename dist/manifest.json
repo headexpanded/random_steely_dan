@@ -16,16 +16,16 @@
       "48": "img/double-helix-icon48.png",
       "16": "img/double-helix-icon16.png"
     },
-    "default_popup": "./popup.html"
+    "default_popup": "popup.html"
   },
   "content_scripts": [
     {
-      "css": ["./style.css"],
-      "js": ["./content.js"]
+      "css": ["style.css"],
+      "js": ["content.js"]
     }
   ],
   "permissions": ["alarms", "notifications", "storage"],
   "background": {
-    "service_worker": "./background.js"
+    "service_worker": "qbackground.js"
   }
 }

@@ -1,6 +1,6 @@
 # random_steely_dan
 
-![Steely Dan cover art](https://media.graphassets.com/zXHP7H3RzWK8gzEqyJLx)]
+![Steely Dan cover art](https://media.graphassets.com/zXHP7H3RzWK8gzEqyJLx)
 
 A Chrome extension which displays a random Steely Dan lyric snippet as a browser notification every 8 hours.
 

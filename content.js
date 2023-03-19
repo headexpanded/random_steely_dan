@@ -1,4 +1,4 @@
-// Get the most recently displayed lyric from background.js
+// Get the most recently  lyric from local storage
 // Display it in the popup
 
 const lyricSpan = document.getElementById("lyric");
@@ -17,6 +17,7 @@ chrome.storage.local.get("songData", function (result) {
     songSpan.textContent = `Song: ${result.songData.song}`;
     albumSpan.textContent = `Album: ${result.songData.album}`;
     const albumId = result.songData.albumId;
+    // get the album's cover art
     switch (albumId) {
       case 1:
         albumCoverImg.src =
@@ -64,9 +65,7 @@ chrome.storage.local.get("songData", function (result) {
 });
 
 chrome.storage.local.get("albumCover", function (data) {
-  if (data.albumCover) {
-    console.log(data.albumCover.cover.url);
-  } else {
-    console.log("Data error");
+  if (!data.albumCover) {
+    console.log("Could not retreive album cover art");
   }
 });

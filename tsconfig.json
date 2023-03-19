@@ -1,0 +1,15 @@
+{
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "allowJs": true,
+    "checkJs": true
+  }
+}

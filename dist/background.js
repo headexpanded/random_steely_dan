@@ -28,30 +28,30 @@ let lastFetchTime = 0;
 let queryIndex = 0;
 const lyricQueries = [
     `
-    query SteelyDanLyrics {
-      steelyDanLyrics(where: {}, first: 100) {
+    query SteelyDanItems1st100 {
+      steelyDanItems(first: 100) {
         lyric
-        song
+        song_name
         album
         albumId
       }
     }
   `,
     `
-    query SteelyDanLyrics {
-      steelyDanLyrics(where: {}, first: 100, skip:100) {
+    query SteelyDanItems2nd100 {
+      steelyDanItems(first: 100, skip:100) {
         lyric
-        song
+        song_name
         album
         albumId
       }
     }
   `,
     `
-    query SteelyDanLyrics {
-      steelyDanLyrics(where: {}, last: 100) {
+    query SteelyDanItemsLast100 {
+      steelyDanItems(last: 100) {
         lyric
-        song
+        song_name
         album
         albumId
       }
@@ -62,6 +62,7 @@ async function getSong(queryIndex) {
     const currentTime = Date.now();
     const elapsedTime = currentTime - lastFetchTime;
     const fetchInterval = 0.25 * 60 * 1000;
+    // get a random number between 0 and 100
     const randomNumber = Math.floor(Math.random() * 100);
     const query = lyricQueries[queryIndex];
     if (elapsedTime >= fetchInterval) {
@@ -75,7 +76,10 @@ async function getSong(queryIndex) {
                 body: JSON.stringify({ query }),
             });
             const songData = await response.json();
-            const song = songData.data.steelyDanLyrics[randomNumber];
+            // HiGraph applies a long random string to each entry as an iD
+            // we can't use that to select from an array.
+            // so we use the random number(0..100) instead
+            const song = songData.data.steelyDanItems[randomNumber];
             lastFetchTime = currentTime;
             // Return the song
             return song;
@@ -88,20 +92,20 @@ async function getSong(queryIndex) {
         console.log("Fetch call skipped");
     }
 }
-chrome.alarms.create("steelyDanLyric", {
+chrome.alarms.create("steelyDanItem", {
     // Set the alarm to trigger in the next 8 hours
     when: Date.now() + Math.floor(Math.random() * 0.25 * 60 * 60 * 1000),
 });
 chrome.alarms.onAlarm.addListener(async () => {
     // Reset the alarm for the next time
-    chrome.alarms.create("steelyDanLyric", {
+    chrome.alarms.create("steelyDanItem", {
         when: Date.now() + 0.25 * 60 * 60 * 1000, // Set the alarm to trigger in 8 hours
     });
     // set query index to 1, 2, or 3
     queryIndex = (queryIndex + 1) % 3;
     const newSong = await getSong(queryIndex);
     if (newSong) {
-        chrome.notifications.create("steelyDanLyric", {
+        chrome.notifications.create("steelyDanItem", {
             type: "basic",
             iconUrl: "img/double-helix-icon128.png",
             title: newSong.lyric,

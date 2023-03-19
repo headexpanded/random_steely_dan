@@ -47,8 +47,8 @@ interface songData {
 
 const lyricQueries: string[] = [
   `
-    query SteelyDanItems {
-      steelyDanItems(where: {}, first: 100) {
+    query SteelyDanItems1st100 {
+      steelyDanItems(first: 100) {
         lyric
         song_name
         album
@@ -58,8 +58,8 @@ const lyricQueries: string[] = [
   `,
 
   `
-    query SteelyDanItems {
-      steelyDanItems(where: {}, first: 100, skip:100) {
+    query SteelyDanItems2nd100 {
+      steelyDanItems(first: 100, skip:100) {
         lyric
         song_name
         album
@@ -69,8 +69,8 @@ const lyricQueries: string[] = [
   `,
 
   `
-    query SteelyDanItems {
-      steelyDanItems(where: {}, last: 100) {
+    query SteelyDanItemsLast100 {
+      steelyDanItems(last: 100) {
         lyric
         song_name
         album

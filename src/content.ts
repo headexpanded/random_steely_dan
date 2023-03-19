@@ -47,7 +47,7 @@ chrome.storage.local.get(
           albumCoverImg.src = chrome.runtime.getURL(
             "/img/covers/album_cover_3.jpg"
           );
-          albumCoverImg.alt = chrome.runtime.getURL("Pretzel Logic cover art");
+          albumCoverImg.alt = "Pretzel Logic cover art";
           break;
         case 4:
           albumCoverImg.src = chrome.runtime.getURL(
@@ -75,18 +75,21 @@ chrome.storage.local.get(
           break;
         case 8:
           albumCoverImg.src = chrome.runtime.getURL(
-            "https://media.graphassets.com/DdHAZfEwQqW0gUUKIC7f"
+            "/img/covers/album_cover_8.jpg"
           );
+          albumCoverImg.alt = "Decade cover art";
           break;
         case 9:
           albumCoverImg.src = chrome.runtime.getURL(
-            "https://media.graphassets.com/Uk751ZwLTSk0PCjSZr7M"
+            "/img/covers/album_cover_9.jpg"
           );
+          albumCoverImg.alt = "Gold cover art";
           break;
         default:
           albumCoverImg.src = chrome.runtime.getURL(
             "/img/covers/album_cover_1.jpg"
           );
+          albumCoverImg.alt = "Default cover art";
       }
     } else {
       lyricSpan.textContent = "Lyric goes here.";

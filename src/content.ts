@@ -9,7 +9,7 @@ const albumCoverImg = <HTMLImageElement>(
 );
 
 const cover = <HTMLDivElement>document.getElementById("cover");
-const noResultText: string = `There's no lyric to show right now. Check back in an hour or two.`;
+const noResultText: string = `New install? Your first lyric will appear here in about 8 hours' time.`;
 
 interface songData {
   lyric: string;
@@ -92,7 +92,7 @@ chrome.storage.local.get(
           albumCoverImg.alt = "Default cover art";
       }
     } else {
-      lyricSpan.textContent = "Lyric goes here.";
+      lyricSpan.textContent = "New install? Your first lyric will appear here in about 8 hours' time.";
     }
   }
 );

@@ -6,7 +6,7 @@ const songSpan = document.getElementById("song");
 const albumSpan = document.getElementById("album");
 const albumCoverImg = (document.getElementById("albumCoverImg"));
 const cover = document.getElementById("cover");
-const noResultText = `There's no lyric to show right now. Check back in an hour or two.`;
+const noResultText = `New install? Your first lyric will appear here in about 8 hours' time.`;
 // Get locally stored song when the user clicks the extension button
 chrome.storage.local.get("songData", function (result) {
     if (result.songData) {
@@ -59,6 +59,6 @@ chrome.storage.local.get("songData", function (result) {
         }
     }
     else {
-        lyricSpan.textContent = "Lyric goes here.";
+        lyricSpan.textContent = "New install? Your first lyric will appear here in about 8 hours' time.";
     }
 });

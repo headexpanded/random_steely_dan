@@ -26,7 +26,13 @@ HTML, CSS, TS, JS
 */
 const ALARM_NAME: string = "steelyDanItem";
 let lastFetchTime: number = 0;
-let queryIndex: number = 0;
+const defaultSong: Song = {
+  // in case nothing is returned from getSong() API call
+  lyric: "Shine up the battle apple.",
+  song_name: "Josie",
+  album: "Aja",
+  albumId: 6,
+};
 
 interface Song {
   lyric: string;
@@ -81,7 +87,7 @@ const lyricQueries: string[] = [
   `,
 ];
 
-async function getSong(queryIndex: number) {
+async function getSong(queryIndex: number): Promise<Song> {
   const currentTime: number = Date.now();
   const elapsedTime: number = currentTime - lastFetchTime;
   const fetchInterval: number = 8 * 60 * 1000;
@@ -115,10 +121,35 @@ async function getSong(queryIndex: number) {
       return song;
     } catch (error) {
       console.log("There was an error:", error);
+      const song: Song = defaultSong;
+      return song;
     }
   } else {
     console.log("Fetch call skipped");
+    const song: Song = defaultSong;
+    return song;
   }
+}
+
+async function getAndNotifySong(): Promise<Song> {
+  //
+  let queryIndex: number = 0;
+  // Setting the query index to 1, 2, or 3
+  // allows us to get any song from the +250 items in the db
+  // despite HiGraph limiting returns to only 100 items
+  queryIndex = (queryIndex + 1) % 3;
+  const newSong = await getSong(queryIndex);
+  if (newSong) {
+    chrome.notifications.create(ALARM_NAME, {
+      type: "basic",
+      iconUrl: "img/double-helix-icon128.png",
+      title: newSong.lyric,
+      message: "",
+    });
+
+    chrome.storage.local.set({ songData: newSong });
+  }
+  return defaultSong;
 }
 
 chrome.alarms.create(ALARM_NAME, {
@@ -131,22 +162,10 @@ chrome.alarms.onAlarm.addListener(async () => {
   chrome.alarms.create(ALARM_NAME, {
     when: Date.now() + 8 * 60 * 60 * 1000,
   });
-
-  // Setting the query index to 1, 2, or 3
-  // allows us to get any song from the +250 items in the db
-  // despite HiGraph limiting returns to only 100 items
-  queryIndex = (queryIndex + 1) % 3;
-
-  const newSong = await getSong(queryIndex);
-  if (newSong) {
-    chrome.notifications.create(ALARM_NAME, {
-      type: "basic",
-      iconUrl: "img/double-helix-icon128.png",
-      title: newSong.lyric,
-      message: "",
-    });
-
-    chrome.storage.local.set({ songData: newSong });
-  }
+  getAndNotifySong();
 });
 
+// on install:
+// - create a song lyric notification
+// - put a song object into local storage
+chrome.runtime.onInstalled.addListener(getAndNotifySong);

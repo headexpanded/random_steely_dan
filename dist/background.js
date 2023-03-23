@@ -27,7 +27,13 @@ HTML, CSS, TS, JS
 */
 const ALARM_NAME = "steelyDanItem";
 let lastFetchTime = 0;
-let queryIndex = 0;
+const defaultSong = {
+    // in case nothing is returned from getSong() API call
+    lyric: "Shine up the battle apple.",
+    song_name: "Josie",
+    album: "Aja",
+    albumId: 6,
+};
 const lyricQueries = [
     `
     query SteelyDanItems1st100 {
@@ -89,21 +95,19 @@ async function getSong(queryIndex) {
         }
         catch (error) {
             console.log("There was an error:", error);
+            const song = defaultSong;
+            return song;
         }
     }
     else {
         console.log("Fetch call skipped");
+        const song = defaultSong;
+        return song;
     }
 }
-chrome.alarms.create(ALARM_NAME, {
-    // Set the alarm to trigger in the next 8 hours
-    when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
-});
-chrome.alarms.onAlarm.addListener(async () => {
-    // Reset the alarm for the next time
-    chrome.alarms.create(ALARM_NAME, {
-        when: Date.now() + 8 * 60 * 60 * 1000,
-    });
+async function getAndNotifySong() {
+    //
+    let queryIndex = 0;
     // Setting the query index to 1, 2, or 3
     // allows us to get any song from the +250 items in the db
     // despite HiGraph limiting returns to only 100 items
@@ -118,4 +122,20 @@ chrome.alarms.onAlarm.addListener(async () => {
         });
         chrome.storage.local.set({ songData: newSong });
     }
+    return defaultSong;
+}
+chrome.alarms.create(ALARM_NAME, {
+    // Set the alarm to trigger in the next 8 hours
+    when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
 });
+chrome.alarms.onAlarm.addListener(async () => {
+    // Reset the alarm for the next time
+    chrome.alarms.create(ALARM_NAME, {
+        when: Date.now() + 8 * 60 * 60 * 1000,
+    });
+    getAndNotifySong();
+});
+// on install:
+// - create a song lyric notification
+// - put a song object into local storage
+chrome.runtime.onInstalled.addListener(getAndNotifySong);

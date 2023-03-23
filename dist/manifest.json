@@ -2,8 +2,8 @@
   "name": "Random Steely Dan",
   "description": "Get a random Steely Dan lyric in a browser notification! One per 8 hours. Click button for song, album, & cover art.",
   "manifest_version": 3,
-  "version": "0.5.0",
-  "version_name": "Version: 0.5.0: 'Pepe'",
+  "version": "0.6.0",
+  "version_name": "Version: 0.6.0: 'Josie'",
   "icons": {
     "128": "img/double-helix-icon128.png",
     "48": "img/double-helix-icon48.png",

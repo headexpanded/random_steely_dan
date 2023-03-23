@@ -149,3 +149,4 @@ chrome.alarms.onAlarm.addListener(async () => {
     chrome.storage.local.set({ songData: newSong });
   }
 });
+

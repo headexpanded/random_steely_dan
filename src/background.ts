@@ -24,7 +24,7 @@ HTML, CSS, TS, JS
     3/ the name of the album upon which the song appears
     4/ the cover art of the album
 */
-
+const ALARM_NAME: string = "steelyDanItem";
 let lastFetchTime: number = 0;
 let queryIndex: number = 0;
 
@@ -121,14 +121,14 @@ async function getSong(queryIndex: number) {
   }
 }
 
-chrome.alarms.create("steelyDanItem", {
+chrome.alarms.create(ALARM_NAME, {
   // Set the alarm to trigger in the next 8 hours
   when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
   // Reset the alarm for the next time
-  chrome.alarms.create("steelyDanItem", {
+  chrome.alarms.create(ALARM_NAME, {
     when: Date.now() + 8 * 60 * 60 * 1000,
   });
 
@@ -139,7 +139,7 @@ chrome.alarms.onAlarm.addListener(async () => {
 
   const newSong = await getSong(queryIndex);
   if (newSong) {
-    chrome.notifications.create("steelyDanItem", {
+    chrome.notifications.create(ALARM_NAME, {
       type: "basic",
       iconUrl: "img/double-helix-icon128.png",
       title: newSong.lyric,

@@ -6,7 +6,7 @@ A Chrome extension which displays a random Steely Dan lyric snippet as a browser
 
 - Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/random-steely-dan/ohmpmkjhiadganahhcaakeacniikloni?hl=en-GB)
 
-- HTML, CSS, TypeScript - {noImplicitAnys: true}, JavaScript, GraphQL
+- HTML, CSS, TypeScript - {noImplicitAnys: true}, GraphQL
 
 ## Contributing
 

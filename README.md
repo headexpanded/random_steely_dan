@@ -1,4 +1,4 @@
-# random_steely_dan
+# Random Steely Dan
 
 ![Steely Dan cover art](https://media.graphassets.com/zXHP7H3RzWK8gzEqyJLx)
 

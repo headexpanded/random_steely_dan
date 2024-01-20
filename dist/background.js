@@ -100,19 +100,18 @@ async function getSong(queryIndex) {
         }
     }
     else {
-        console.log("Fetch call skipped");
         const song = defaultSong;
         return song;
     }
 }
 async function getAndNotifySong() {
     //
-    let queryIndex = 0;
+    const queryIndex = [1, 2, 3];
     // Setting the query index to 1, 2, or 3
     // allows us to get any song from the +250 items in the db
     // despite HiGraph limiting returns to only 100 items
-    queryIndex = (queryIndex + 1) % 3;
-    const newSong = await getSong(queryIndex);
+    const index = queryIndex[(Math.floor(Math.random() * queryIndex.length))];
+    const newSong = await getSong(index);
     if (newSong) {
         chrome.notifications.create(ALARM_NAME, {
             type: "basic",

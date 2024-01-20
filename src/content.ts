@@ -2,17 +2,14 @@
 // Display it in the popup
 
 document.addEventListener('DOMContentLoaded', function () {
-  const lyricSpan = <HTMLSpanElement>document.getElementById('lyric');
-  const songSpan = <HTMLSpanElement>document.getElementById('song');
-  const albumSpan = <HTMLSpanElement>document.getElementById('album');
+  const lyricSpan = <HTMLSpanElement>document.querySelector('#lyric');
+  const songSpan = <HTMLSpanElement>document.querySelector('#song');
+  const albumSpan = <HTMLSpanElement>document.querySelector('#album');
   const albumCoverImg = <HTMLImageElement>(
-    document.getElementById('albumCoverImg')
+    document.querySelector('#albumCoverImg')
   );
 
-  const cover = <HTMLDivElement>document.getElementById('cover');
-  const noResultText: string = `New install? Your first lyric will appear here in about 8 hours' time.`;
-
-  interface songData {
+  type songData = {
     lyric: string;
     song_name: string;
     album: string;
@@ -25,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
     'songData',
     function (result: { songData?: songData }) {
       if (result.songData) {
-        lyricSpan.textContent = `${result.songData.lyric}`;
-        songSpan.textContent = `Song: ${result.songData.song_name}`;
-        albumSpan.textContent = `Album: ${result.songData.album}`;
-        const albumId: number = result.songData.albumId;
+        lyricSpan.textContent = `${result.songData?.lyric}`;
+        songSpan.textContent = `Song: ${result.songData?.song_name}`;
+        albumSpan.textContent = `Album: ${result.songData?.album}`;
+        const albumId: number = result.songData?.albumId;
         // get the album's cover art
         switch (albumId) {
           case 1:

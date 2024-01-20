@@ -125,7 +125,6 @@ async function getSong(queryIndex: number): Promise<Song> {
       return song;
     }
   } else {
-    console.log("Fetch call skipped");
     const song: Song = defaultSong;
     return song;
   }

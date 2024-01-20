@@ -4,6 +4,6 @@
     "chrome-types": "^0.1.179"
   },
   "devDependencies": {
-    "typescript": "^5.0.2"
+    "typescript": "^5.3.3"
   }
 }

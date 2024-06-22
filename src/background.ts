@@ -24,10 +24,10 @@ HTML, CSS, TS, JS
     3/ the name of the album upon which the song appears
     4/ the cover art of the album
 */
-const ALARM_NAME: string = "steelyDanItem";
-const FETCH_INTERVAL: number = 8 * 60 * 1000;
+const ALARM_NAME = "steelyDanItem";
+const FETCH_INTERVAL = 8 * 60 * 1000;
 
-let lastFetchTime: number = 0;
+let lastFetchTime = 0;
 const defaultSong: Song = {
   // in case nothing is returned from getSong() API call
   lyric: "Shine up the battle apple.",
@@ -87,7 +87,7 @@ const lyricQueries = [
 async function getSong(queryIndex: number): Promise<Song> {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
-  
+
   // get a random number between 0 and 100
   const randomNumber = Math.floor(Math.random() * 100);
   const query = lyricQueries[queryIndex];
@@ -111,7 +111,7 @@ async function getSong(queryIndex: number): Promise<Song> {
       // we can't use that to select from an array.
       // so instead we use the random number {0..100}
       // to select one song from the array
-      const song: Song = songData.data.steelyDanItems[randomNumber];
+      const song = songData.data.steelyDanItems[randomNumber];
       lastFetchTime = currentTime;
 
       // Return the song

@@ -25,6 +25,8 @@ HTML, CSS, TS, JS
     4/ the cover art of the album
 */
 const ALARM_NAME: string = "steelyDanItem";
+const FETCH_INTERVAL: number = 8 * 60 * 1000;
+
 let lastFetchTime: number = 0;
 const defaultSong: Song = {
   // in case nothing is returned from getSong() API call
@@ -43,16 +45,11 @@ type Song = {
 
 type songData = {
   data: {
-    steelyDanItems: {
-      lyric: string;
-      song_name: string;
-      album: string;
-      albumId: number;
-    }[];
+    steelyDanItems: Song[];
   };
 }
 
-const lyricQueries: string[] = [
+const lyricQueries = [
   `
     query SteelyDanItems1st100 {
       steelyDanItems(first: 100) {
@@ -88,14 +85,14 @@ const lyricQueries: string[] = [
 ];
 
 async function getSong(queryIndex: number): Promise<Song> {
-  const currentTime: number = Date.now();
-  const elapsedTime: number = currentTime - lastFetchTime;
-  const fetchInterval: number = 8 * 60 * 1000;
+  const currentTime = Date.now();
+  const elapsedTime = currentTime - lastFetchTime;
+  
   // get a random number between 0 and 100
-  const randomNumber: number = Math.floor(Math.random() * 100);
-  const query: string = lyricQueries[queryIndex];
+  const randomNumber = Math.floor(Math.random() * 100);
+  const query = lyricQueries[queryIndex];
 
-  if (elapsedTime >= fetchInterval) {
+  if (elapsedTime >= FETCH_INTERVAL) {
     try {
       const response = await fetch(
         "https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master",
@@ -121,12 +118,10 @@ async function getSong(queryIndex: number): Promise<Song> {
       return song;
     } catch (error) {
       console.log("There was an error:", error);
-      const song: Song = defaultSong;
-      return song;
+      return defaultSong;
     }
   } else {
-    const song: Song = defaultSong;
-    return song;
+    return defaultSong;
   }
 }
 

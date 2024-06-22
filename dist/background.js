@@ -26,6 +26,7 @@ HTML, CSS, TS, JS
     4/ the cover art of the album
 */
 const ALARM_NAME = "steelyDanItem";
+const FETCH_INTERVAL = 8 * 60 * 1000;
 let lastFetchTime = 0;
 const defaultSong = {
     // in case nothing is returned from getSong() API call
@@ -69,11 +70,10 @@ const lyricQueries = [
 async function getSong(queryIndex) {
     const currentTime = Date.now();
     const elapsedTime = currentTime - lastFetchTime;
-    const fetchInterval = 8 * 60 * 1000;
     // get a random number between 0 and 100
     const randomNumber = Math.floor(Math.random() * 100);
     const query = lyricQueries[queryIndex];
-    if (elapsedTime >= fetchInterval) {
+    if (elapsedTime >= FETCH_INTERVAL) {
         try {
             const response = await fetch("https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master", {
                 method: "POST",
@@ -88,20 +88,18 @@ async function getSong(queryIndex) {
             // we can't use that to select from an array.
             // so instead we use the random number {0..100}
             // to select one song from the array
-            const song = songData.data.steelyDanItems[randomNumber];
+            const song = songData?.data?.steelyDanItems[randomNumber];
             lastFetchTime = currentTime;
             // Return the song
             return song;
         }
         catch (error) {
             console.log("There was an error:", error);
-            const song = defaultSong;
-            return song;
+            return defaultSong;
         }
     }
     else {
-        const song = defaultSong;
-        return song;
+        return defaultSong;
     }
 }
 async function getAndNotifySong() {

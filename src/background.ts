@@ -111,7 +111,7 @@ async function getSong(queryIndex: number): Promise<Song> {
       // we can't use that to select from an array.
       // so instead we use the random number {0..100}
       // to select one song from the array
-      const song = songData.data.steelyDanItems[randomNumber];
+      const song = songData?.data?.steelyDanItems[randomNumber];
       lastFetchTime = currentTime;
 
       // Return the song

@@ -1,5 +1,5 @@
 "use strict";
-// Get the most recently  lyric from local storage
+// Get the most recent lyric from local storage
 // Display it in the popup
 document.addEventListener('DOMContentLoaded', function () {
     const lyricSpan = document.querySelector('#lyric');

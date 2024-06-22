@@ -6,7 +6,7 @@
 
   /* color variables */
   --white: #fdffff;
-  --darkFont: #001429;
+  --darkText: #001429;
 
   /* layout variables */
   --borderRadius: 4px;
@@ -18,7 +18,6 @@ html {
   background: var(--white);
   min-height: 3rem;
   min-width: 22rem;
-  user-select: none;
 }
 
 body {
@@ -42,7 +41,7 @@ h1 {
 }
 
 .wrapper {
-  color: var(--darkFont);
+  color: var(--darkText);
   display: flex;
   flex-direction: column;
   height: 4rem;

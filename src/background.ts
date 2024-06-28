@@ -148,13 +148,13 @@ async function getAndNotifySong(): Promise<Song> {
 
 chrome.alarms.create(ALARM_NAME, {
   // Set the alarm to trigger in the next 8 hours
-  when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
+  when: Date.now() + Math.floor(Math.random() * FETCH_INTERVAL * 60),
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
   // Reset the alarm for the next time
   chrome.alarms.create(ALARM_NAME, {
-    when: Date.now() + 8 * 60 * 60 * 1000,
+    when: Date.now() + FETCH_INTERVAL * 60,
   });
   getAndNotifySong();
 });

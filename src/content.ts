@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
             albumCoverImg.alt = "Can't Buy A Thrill cover art";
             break;
           case 2:
-            //albumCoverImg.src = "/img/covers/album_cover_2.jpg";
             albumCoverImg.src = chrome.runtime.getURL(
               '/img/covers/album_cover_2.jpg'
             );

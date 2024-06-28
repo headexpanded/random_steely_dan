@@ -90,8 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
             albumCoverImg.alt = 'Default cover art';
         }
       } else {
-        lyricSpan.textContent =
-          "New install? Your first lyric will appear here in about 8 hours' time.";
+        lyricSpan.textContent = "Shine up the battle apple.";
+        songSpan.textContent = "Josie";
+        albumSpan.textContent = "Aja";
+        albumCoverImg.src = chrome.runtime.getURL('/img/covers/album_cover_6.jpg');
+        albumCoverImg.alt = 'Aja cover art';
       }
     }
   );

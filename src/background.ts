@@ -120,18 +120,31 @@ async function getSong(queryIndex: number): Promise<Song> {
       console.log("There was an error:", error);
       return defaultSong;
     }
-  } else {
-    return defaultSong;
   }
+  return defaultSong;
 }
 
 async function getAndNotifySong(): Promise<Song> {
-  //
-  const queryIndex = [1,2,3];
-  // Setting the query index to 1, 2, or 3
-  // allows us to get any song from the +250 items in the db
-  // despite HiGraph limiting returns to only 100 items
-  const index = queryIndex[(Math.floor(Math.random() * queryIndex.length))];
+  const queryIndex = [1, 2, 3];
+  const index = queryIndex[Math.floor(Math.random() * queryIndex.length)];
+
+  // Check if there is a song in local storage
+  const storedSong = await new Promise((resolve) => {
+    chrome.storage.local.get('songData', (result) => {
+      resolve(result.songData);
+    });
+  });
+
+  // If no song is found in local storage, return an empty song object
+  if (!storedSong) {
+    return {
+      lyric: "Your next random Steely Dan lyric will be here in about 8 hours' time.",
+      song_name: "",
+      album: "",
+      albumId: 0,
+    }; // Return an empty song object conforming to the Song type
+  }
+
   const newSong = await getSong(index);
   if (newSong) {
     chrome.notifications.create(ALARM_NAME, {
@@ -142,8 +155,15 @@ async function getAndNotifySong(): Promise<Song> {
     });
 
     chrome.storage.local.set({ songData: newSong });
+    return newSong;
+  } else {
+    return {
+      lyric: "Your next random Steely Dan lyric will be here in about 8 hours' time.",
+      song_name: "",
+      album: "",
+      albumId: 0,
+    }; // Return an empty song object if newSong is falsy
   }
-  return defaultSong;
 }
 
 chrome.alarms.create(ALARM_NAME, {

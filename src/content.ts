@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.storage.local.get(
     'songData',
     function (result: { songData?: songData }) {
-      if (result.songData) {
+      if (result.songData != null) {
         lyricSpan.textContent = `${result.songData?.lyric}`;
         songSpan.textContent = `Song: ${result.songData?.song_name}`;
         albumSpan.textContent = `Album: ${result.songData?.album}`;

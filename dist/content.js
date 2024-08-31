@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const albumCoverImg = (document.querySelector('#albumCoverImg'));
     // Get locally stored song when the user clicks the extension button
     chrome.storage.local.get('songData', function (result) {
-        if (result.songData) {
+        if (result.songData != null) {
             lyricSpan.textContent = `${result.songData?.lyric}`;
             songSpan.textContent = `Song: ${result.songData?.song_name}`;
             albumSpan.textContent = `Album: ${result.songData?.album}`;
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     albumCoverImg.alt = "Can't Buy A Thrill cover art";
                     break;
                 case 2:
-                    //albumCoverImg.src = "/img/covers/album_cover_2.jpg";
                     albumCoverImg.src = chrome.runtime.getURL('/img/covers/album_cover_2.jpg');
                     albumCoverImg.alt = 'Countdown To Ecstasy cover art';
                     break;
@@ -58,8 +57,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         else {
-            lyricSpan.textContent =
-                "New install? Your first lyric will appear here in about 8 hours' time.";
+            lyricSpan.textContent = "Shine up the battle apple.";
+            songSpan.textContent = "Josie";
+            albumSpan.textContent = "Aja";
+            albumCoverImg.src = chrome.runtime.getURL('/img/covers/album_cover_6.jpg');
+            albumCoverImg.alt = 'Aja cover art';
         }
     });
 });

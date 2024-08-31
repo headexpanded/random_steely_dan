@@ -98,17 +98,26 @@ async function getSong(queryIndex) {
             return defaultSong;
         }
     }
-    else {
-        return defaultSong;
-    }
+    return defaultSong;
 }
 async function getAndNotifySong() {
-    //
     const queryIndex = [1, 2, 3];
-    // Setting the query index to 1, 2, or 3
-    // allows us to get any song from the +250 items in the db
-    // despite HiGraph limiting returns to only 100 items
-    const index = queryIndex[(Math.floor(Math.random() * queryIndex.length))];
+    const index = queryIndex[Math.floor(Math.random() * queryIndex.length)];
+    // Check if there is a song in local storage
+    const storedSong = await new Promise((resolve) => {
+        chrome.storage.local.get('songData', (result) => {
+            resolve(result.songData);
+        });
+    });
+    // If no song is found in local storage, return an empty song object
+    if (!storedSong) {
+        return {
+            lyric: "Your next random Steely Dan lyric will be here in about 8 hours' time.",
+            song_name: "",
+            album: "",
+            albumId: 0,
+        }; // Return an empty song object conforming to the Song type
+    }
     const newSong = await getSong(index);
     if (newSong) {
         chrome.notifications.create(ALARM_NAME, {
@@ -118,17 +127,25 @@ async function getAndNotifySong() {
             message: "",
         });
         chrome.storage.local.set({ songData: newSong });
+        return newSong;
     }
-    return defaultSong;
+    else {
+        return {
+            lyric: "Your next random Steely Dan lyric will be here in about 8 hours' time.",
+            song_name: "",
+            album: "",
+            albumId: 0,
+        }; // Return an empty song object if newSong is falsy
+    }
 }
 chrome.alarms.create(ALARM_NAME, {
     // Set the alarm to trigger in the next 8 hours
-    when: Date.now() + Math.floor(Math.random() * 8 * 60 * 60 * 1000),
+    when: Date.now() + Math.floor(Math.random() * FETCH_INTERVAL * 60),
 });
 chrome.alarms.onAlarm.addListener(async () => {
     // Reset the alarm for the next time
     chrome.alarms.create(ALARM_NAME, {
-        when: Date.now() + 8 * 60 * 60 * 1000,
+        when: Date.now() + FETCH_INTERVAL * 60,
     });
     getAndNotifySong();
 });

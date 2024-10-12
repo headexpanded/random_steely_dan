@@ -25,20 +25,21 @@ HTML, CSS, TS, JS
     4/ the cover art of the album
 */
 const ALARM_NAME = "steelyDanItem";
-const FETCH_INTERVAL = 8 * 60 * 1000;
+const FETCH_INTERVAL = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
 
 let lastFetchTime = 0;
+
 const defaultSong: Song = {
   // in case nothing is returned from getSong() API call
   lyric: "Shine up the battle apple.",
-  song_name: "Josie",
+  songName: "Josie",
   album: "Aja",
   albumId: 6,
 };
 
 type Song = {
   lyric: string;
-  song_name: string;
+  songName: string;
   album: string;
   albumId: number;
 }
@@ -92,7 +93,7 @@ async function getSong(queryIndex: number): Promise<Song> {
   const randomNumber = Math.floor(Math.random() * 100);
   const query = lyricQueries[queryIndex];
 
-  if (elapsedTime >= FETCH_INTERVAL) {
+  if (elapsedTime >= FETCH_INTERVAL || lastFetchTime === 0) {
     try {
       const response = await fetch(
         "https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master",
@@ -114,7 +115,6 @@ async function getSong(queryIndex: number): Promise<Song> {
       const song = songData?.data?.steelyDanItems[randomNumber];
       lastFetchTime = currentTime;
 
-      // Return the song
       return song;
     } catch (error) {
       console.log("There was an error:", error);
@@ -124,29 +124,12 @@ async function getSong(queryIndex: number): Promise<Song> {
   return defaultSong;
 }
 
-async function getAndNotifySong(): Promise<Song> {
-  const queryIndex = [1, 2, 3];
-  const index = queryIndex[Math.floor(Math.random() * queryIndex.length)];
-
-  // Check if there is a song in local storage
-  const storedSong = await new Promise((resolve) => {
-    chrome.storage.local.get('songData', (result) => {
-      resolve(result.songData);
-    });
-  });
+async function getAndNotifySong(): Promise<void> {
+  const queryIndex = Math.floor(Math.random() * lyricQueries.length);
+  const newSong = await getSong(queryIndex)
 
   // If no song is found in local storage, return an empty song object
-  if (!storedSong) {
-    return {
-      lyric: "Your next random Steely Dan lyric will be here in about 8 hours' time.",
-      song_name: "",
-      album: "",
-      albumId: 0,
-    }; // Return an empty song object conforming to the Song type
-  }
-
-  const newSong = await getSong(index);
-  if (newSong) {
+  if (newSong && newSong.lyric) {
     chrome.notifications.create(ALARM_NAME, {
       type: "basic",
       iconUrl: "img/double-helix-icon128.png",
@@ -155,31 +138,19 @@ async function getAndNotifySong(): Promise<Song> {
     });
 
     chrome.storage.local.set({ songData: newSong });
-    return newSong;
   } else {
-    return {
-      lyric: "Your next random Steely Dan lyric will be here in about 8 hours' time.",
-      song_name: "",
-      album: "",
-      albumId: 0,
-    }; // Return an empty song object if newSong is falsy
+    console.log("Failed to fetch new song.")
   }
 }
 
-chrome.alarms.create(ALARM_NAME, {
-  // Set the alarm to trigger in the next 8 hours
-  when: Date.now() + Math.floor(Math.random() * FETCH_INTERVAL * 60),
-});
-
-chrome.alarms.onAlarm.addListener(async () => {
-  // Reset the alarm for the next time
-  chrome.alarms.create(ALARM_NAME, {
-    when: Date.now() + FETCH_INTERVAL * 60,
-  });
+chrome.alarms.onAlarm.addListener(() => {
   getAndNotifySong();
+  // Reset the alarm for the next time
+  chrome.alarms.create(ALARM_NAME, { when: Date.now() + FETCH_INTERVAL });
 });
 
 // on install:
-// - create a song lyric notification
-// - put a song object into local storage
-chrome.runtime.onInstalled.addListener(getAndNotifySong);
+chrome.runtime.onInstalled.addListener(() => {
+  getAndNotifySong();
+  chrome.alarms.create(ALARM_NAME, {when: Date.now() + FETCH_INTERVAL});
+});

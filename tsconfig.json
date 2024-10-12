@@ -1,13 +1,15 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "esNext",
+    "module": "esNext",
+    "moduleResolution": "Node",
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "rootDir": "src",
     "allowJs": true,
     "checkJs": true

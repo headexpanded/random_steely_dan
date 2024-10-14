@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     chrome.storage.local.get('songData', function (result) {
         if (result.songData != null) {
             lyricSpan.textContent = result.songData.lyric;
-            songSpan.textContent = `Song: ${result.songData.songName}`;
+            songSpan.textContent = `Song: ${result.songData.song_name}`;
             albumSpan.textContent = `Album: ${result.songData.album}`;
             const albumId = result.songData.albumId;
             albumCoverImg.src = chrome.runtime.getURL(`/img/covers/album_cover_${albumId}.jpg`);

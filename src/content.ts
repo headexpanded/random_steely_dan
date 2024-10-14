@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   type songData = {
     lyric: string;
-    songName: string;
+    song_name: string;
     album: string;
     albumId: number;
   }
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.storage.local.get('songData', function (result: { songData?: songData }) {
       if (result.songData != null) {
         lyricSpan.textContent = result.songData.lyric;
-        songSpan.textContent = `Song: ${result.songData.songName}`;
+        songSpan.textContent = `Song: ${result.songData.song_name}`;
         albumSpan.textContent = `Album: ${result.songData.album}`;
 
         const albumId: number = result.songData.albumId

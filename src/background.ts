@@ -32,14 +32,14 @@ let lastFetchTime = 0;
 const defaultSong: Song = {
   // in case nothing is returned from getSong() API call
   lyric: "Shine up the battle apple.",
-  songName: "Josie",
+  song_name: "Josie",
   album: "Aja",
   albumId: 6,
 };
 
 type Song = {
   lyric: string;
-  songName: string;
+  song_name: string;
   album: string;
   albumId: number;
 }
@@ -125,32 +125,35 @@ async function getSong(queryIndex: number): Promise<Song> {
 }
 
 async function getAndNotifySong(): Promise<void> {
-  const queryIndex = Math.floor(Math.random() * lyricQueries.length);
-  const newSong = await getSong(queryIndex)
+  try {
+    const queryIndex = Math.floor(Math.random() * lyricQueries.length);
+    const newSong = await getSong(queryIndex);
 
-  // If no song is found in local storage, return an empty song object
-  if (newSong && newSong.lyric) {
-    chrome.notifications.create(ALARM_NAME, {
-      type: "basic",
-      iconUrl: "img/double-helix-icon128.png",
-      title: newSong.lyric,
-      message: "",
-    });
+    // If a song is successfully retrieved, display the notification and store it locally
+    if (newSong && newSong.lyric) {
+      chrome.notifications.create(ALARM_NAME, {
+        type: "basic",
+        iconUrl: "img/double-helix-icon128.png",
+        title: newSong.lyric,
+        message: "",
+      });
 
-    chrome.storage.local.set({ songData: newSong });
-  } else {
-    console.log("Failed to fetch new song.")
+      await chrome.storage.local.set({ songData: newSong });
+    } else {
+      console.log("Failed to fetch new song.");
+    }
+  } catch (error) {
+    console.error("An error occurred while fetching or storing the song data:", error);
   }
 }
 
-chrome.alarms.onAlarm.addListener(() => {
-  getAndNotifySong();
-  // Reset the alarm for the next time
+chrome.alarms.onAlarm.addListener(async () => {
+  await getAndNotifySong();
   chrome.alarms.create(ALARM_NAME, { when: Date.now() + FETCH_INTERVAL });
 });
 
-// on install:
-chrome.runtime.onInstalled.addListener(() => {
-  getAndNotifySong();
-  chrome.alarms.create(ALARM_NAME, {when: Date.now() + FETCH_INTERVAL});
+// on installation:
+chrome.runtime.onInstalled.addListener(async () => {
+  await getAndNotifySong();
+  chrome.alarms.create(ALARM_NAME, { when: Date.now() + FETCH_INTERVAL });
 });

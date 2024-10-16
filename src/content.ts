@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         albumCoverImg.src = chrome.runtime.getURL(`/img/covers/album_cover_${albumId}.jpg`);
         albumCoverImg.alt = getAlbumAltText(albumId)
       } else {
-        lyricSpan.textContent = "Fetching your next Steely Dan lyric...";
+        lyricSpan.textContent = "Your next Steely Dan lyric will appear here soon...";
         songSpan.textContent = "Please wait for the next update.";
         albumSpan.textContent = "No album info available (yet)...";
         albumCoverImg.src = chrome.runtime.getURL('/img/covers/album_cover_6.jpg');

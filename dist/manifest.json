@@ -2,8 +2,8 @@
   "name": "Random Steely Dan",
   "description": "Get random Steely Dan lyrics in browser notifications! One per 8 hours. Click button for song, album, & cover art.",
   "manifest_version": 3,
-  "version": "1.0.1",
-  "version_name": "1.0.1: 'Peg'",
+  "version": "1.1.0",
+  "version_name": "1.1.0: 'El Supremo'",
   "icons": {
     "128": "img/double-helix-icon128.png",
     "48": "img/double-helix-icon48.png",

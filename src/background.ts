@@ -25,17 +25,9 @@ HTML, CSS, TS, JS
     4/ the cover art of the album
 */
 const ALARM_NAME = "steelyDanItem";
-const FETCH_INTERVAL = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
+const FETCH_INTERVAL = 7 * 60 * 60 * 1000; // 7 hours in milliseconds
 
 let lastFetchTime = 0;
-
-const defaultSong: Song = {
-  // in case nothing is returned from getSong() API call
-  lyric: "Shine up the battle apple.",
-  song_name: "Josie",
-  album: "Aja",
-  albumId: 6,
-};
 
 type Song = {
   lyric: string;
@@ -85,7 +77,7 @@ const lyricQueries = [
   `,
 ];
 
-async function getSong(queryIndex: number): Promise<Song> {
+async function getSong(queryIndex: number): Promise<Song | null> {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFetchTime;
 
@@ -113,15 +105,19 @@ async function getSong(queryIndex: number): Promise<Song> {
       // so instead we use the random number {0..100}
       // to select one song from the array
       const song = songData?.data?.steelyDanItems[randomNumber];
-      lastFetchTime = currentTime;
-
-      return song;
+      if (song) {
+        lastFetchTime = currentTime;
+        return song;
+      } else {
+        console.log("No song data found.");
+        return null;
+    }
     } catch (error) {
-      console.log("There was an error:", error);
-      return defaultSong;
+      console.log("There was a fetch error:", error);
+      return null;
     }
   }
-  return defaultSong;
+  return null;
 }
 
 async function getAndNotifySong(): Promise<void> {
@@ -140,7 +136,7 @@ async function getAndNotifySong(): Promise<void> {
 
       await chrome.storage.local.set({ songData: newSong });
     } else {
-      console.log("Failed to fetch new song.");
+      console.log("Failed to fetch new song. Will try again at next interval.");
     }
   } catch (error) {
     console.error("An error occurred while fetching or storing the song data:", error);

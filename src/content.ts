@@ -9,30 +9,43 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#albumCoverImg")
   );
 
-  type songData = {
+  type SongData = {
     lyric: string;
     song_name: string;
     album: string;
     albumId: number;
   }
 
+  // Update the popup with new song data
+  const updatePopup = (song: SongData): void => {
+    lyricSpan.textContent = song.lyric;
+    songSpan.textContent = `Song: ${song.song_name}`;
+    albumSpan.textContent = `Album: ${song.album}`;
+
+    const albumId: number = song.albumId;
+    albumCoverImg.src = chrome.runtime.getURL(`/img/covers/album_cover_${albumId}.jpg`);
+    albumCoverImg.alt = getAlbumAltText(albumId);
+  };
+
   // Get locally stored song when the user clicks the extension button
-
-  chrome.storage.local.get("songData", function (result: { songData?: songData }) {
-    if (result.songData != null) {
-      lyricSpan.textContent = result.songData.lyric;
-      songSpan.textContent = `Song: ${result.songData.song_name}`;
-      albumSpan.textContent = `Album: ${result.songData.album}`;
-
-      const albumId: number = result.songData.albumId;
-      albumCoverImg.src = chrome.runtime.getURL(`/img/covers/album_cover_${albumId}.jpg`);
-      albumCoverImg.alt = getAlbumAltText(albumId);
+  chrome.storage.local.get("songData", (result) => {
+    if (result.songData) {
+      updatePopup(result.songData);
     } else {
+      // Display default message if no song data is available
       lyricSpan.textContent = "Your next Steely Dan lyric will appear here soon...";
       songSpan.textContent = "Please wait for the next update.";
       albumSpan.textContent = "No album info available (yet)...";
       albumCoverImg.src = chrome.runtime.getURL("/img/covers/album_cover_6.jpg");
       albumCoverImg.alt = "Aja cover art";
+    }
+  });
+
+  // Listen for changes in chrome.storage.local and update the popup if songData changes
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "local" && changes.songData?.newValue) {
+      console.log("New song data detected:", changes.songData.newValue); // Debugging log
+      updatePopup(changes.songData.newValue);
     }
   });
 

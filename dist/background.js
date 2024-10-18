@@ -26,7 +26,9 @@ HTML, CSS, TS, JS
     4/ the cover art of the album
 */
 const ALARM_NAME = "steelyDanItem";
-const FETCH_INTERVAL = 7 * 60 * 60 * 1000; // 7 hours in milliseconds
+const BASE_INTERVAL = 7 * 60 * 60 * 1000; // 7 hours in milliseconds
+const RANDOM_OFFSET = Math.floor(Math.random() * 30 * 60 * 1000) - (15 * 60 * 1000);
+const FETCH_INTERVAL = BASE_INTERVAL + RANDOM_OFFSET; // fetch interval is between 6 hours 45 minutes and 7 hours 15 minutes
 let lastFetchTime = 0;
 const lyricQueries = [
     `

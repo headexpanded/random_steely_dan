@@ -1,36 +1,42 @@
 {
-  "name": "Random Steely Dan",
-  "description": "Get random Steely Dan lyrics in browser notifications! One per 8 hours. Click button for song, album, & cover art.",
-  "manifest_version": 3,
-  "version": "1.1.0",
-  "version_name": "1.1.0: 'El Supremo'",
-  "icons": {
-    "128": "img/double-helix-icon128.png",
-    "48": "img/double-helix-icon48.png",
-    "16": "img/double-helix-icon16.png"
-  },
-  "action": {
-    "default_title": "Random Steely Dan",
-    "default_icon": {
-      "128": "img/double-helix-icon128.png",
-      "48": "img/double-helix-icon48.png",
-      "16": "img/double-helix-icon16.png"
-    },
-    "default_popup": "popup.html"
-  },
-
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "css": ["style.css"],
-      "js": ["content.js"]
-    }
-  ],
-  "permissions": ["alarms", "notifications", "storage"],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self'"
-  }
+	"name": "Random Steely Dan",
+	"description": "Get random Steely Dan lyrics in browser notifications! One per 7 hours. Click button for song, album, & cover art.",
+	"manifest_version": 3,
+	"version": "1.2.0",
+	"version_name": "1.2.0: 'Sam'",
+	"icons": {
+		"128": "img/double-helix-icon128.png",
+		"48": "img/double-helix-icon48.png",
+		"16": "img/double-helix-icon16.png"
+	},
+	"action": {
+		"default_title": "Random Steely Dan",
+		"default_icon": {
+			"128": "img/double-helix-icon128.png",
+			"48": "img/double-helix-icon48.png",
+			"16": "img/double-helix-icon16.png"
+		},
+		"default_popup": "popup.html"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"css": [
+				"style.css"
+			],
+			"js": [
+				"content.js"
+			]
+		}
+	],
+	"permissions": [
+		"alarms",
+		"notifications",
+		"storage"
+	],
+	"background": {
+		"service_worker": "background.js"
+	}
 }

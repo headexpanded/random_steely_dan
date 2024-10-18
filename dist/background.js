@@ -3,7 +3,7 @@
 A Chrome extension which puts a random lyric by Steely Dan in a browser notification
 HTML, CSS, TS, JS
 
-- the extension sets an alarm every 8 hours
+- the extension sets an alarm every 7 hours
 - the alarm event listener calls the getSong function
 - getSong selects one of three queries to a HiGraph query object
 - (1st 100 results, 2nd 100 results, last 100 results: this is to get around HiGraph's 100 return limit)

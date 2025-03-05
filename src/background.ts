@@ -28,6 +28,7 @@ const ALARM_NAME = "steelyDanItem";
 const BASE_INTERVAL = 7 * 60 * 60 * 1000; // 7 hours in milliseconds
 const RANDOM_OFFSET = Math.floor(Math.random() * 30 * 60 * 1000) - (15 * 60 * 1000);
 const FETCH_INTERVAL = BASE_INTERVAL + RANDOM_OFFSET; // fetch interval is between 6 hours 45 minutes and 7 hours 15 minutes
+// const FETCH_INTERVAL = BASE_INTERVAL + RANDOM_OFFSET; // fetch interval is between 6 hours 45 minutes and 7 hours 15 minutes
 
 let lastFetchTime = 0;
 
@@ -89,19 +90,23 @@ async function getSong(queryIndex: number): Promise<Song | null> {
 
   if (elapsedTime >= FETCH_INTERVAL || lastFetchTime === 0) {
     try {
+
+      const apiUrl = "http://45.158.140.32:3002/random-lyric";
       const response = await fetch(
-        "https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master",
+        apiUrl,
+        // "https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify({ query }),
+          // body: JSON.stringify({ query }),
         },
       );
 
       const songData: SongData = await response.json();
+      console.log(songData);
       // HiGraph applies a long random string to each entry as an iD
       // we can't use that to select from an array.
       // so instead we use the random number {0..100}

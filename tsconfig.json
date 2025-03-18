@@ -1,18 +1,21 @@
 {
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"],
-  "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
-    "moduleResolution": "Node",
-    "lib": ["es2015", "dom"],
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "rootDir": "src",
-    "allowJs": true,
-    "checkJs": true
-  }
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	],
+	"compilerOptions": {
+		"target": "esNext",
+		"module": "esNext",
+		"moduleResolution": "Node",
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"noImplicitAny": true,
+		"outDir": "./dist",
+		"rootDir": "src",
+		"allowJs": true,
+		"checkJs": true
+	}
 }

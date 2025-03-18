@@ -5,18 +5,17 @@
 	"version": "1.4.0",
 	"version_name": "1.4.0: 'William'",
 	"icons": {
-		"128": "img/double-helix-icon128.png",
+		"16": "img/double-helix-icon16.png",
 		"48": "img/double-helix-icon48.png",
-		"16": "img/double-helix-icon16.png"
+		"128": "img/double-helix-icon128.png"
 	},
 	"action": {
-		"default_title": "Random Steely Dan",
+		"default_popup": "popup.html",
 		"default_icon": {
-			"128": "img/double-helix-icon128.png",
+			"16": "img/double-helix-icon16.png",
 			"48": "img/double-helix-icon48.png",
-			"16": "img/double-helix-icon16.png"
-		},
-		"default_popup": "popup.html"
+			"128": "img/double-helix-icon128.png"
+		}
 	},
 	"permissions": [
 		"alarms",

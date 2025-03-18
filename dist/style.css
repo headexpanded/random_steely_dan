@@ -12,76 +12,100 @@
   --borderRadius: 4px;
   --padding: 8px;
   --scale: 1.01;
+
+  /* spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+
+  /* dimensions */
+  --min-width: 22rem;
+  --min-height: 3rem;
+  --cover-size: 300px;
 }
 
+/* Base styles */
 html {
   background: var(--white);
-  min-height: 3rem;
-  min-width: 22rem;
+  min-height: var(--min-height);
+  min-width: var(--min-width);
 }
 
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 img {
   max-width: 100%;
+  height: auto;
+  display: block;
 }
 
+/* Typography */
 h1 {
   font-family: "Michroma", sans-serif;
-  font-size: 2rem;
-  margin-bottom: 0;
+  font-size: var(--spacing-lg);
+  margin: 0;
   text-align: center;
 }
 
 .y {
-  /* this is for the Y in the h1 - the font makes it stick out too much otherwise */
   margin-left: -0.5rem;
 }
 
+/* Layout */
 .wrapper {
   color: var(--darkText);
   display: flex;
   flex-direction: column;
   height: 4rem;
-  margin-top: 0.25rem;
+  margin-top: var(--spacing-xs);
   min-width: 5rem;
   text-align: center;
+  padding: var(--spacing-sm);
 }
 
 .intro {
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .lyric {
   font-size: 1rem;
   font-weight: 600;
-  margin: 1rem 0;
+  margin: var(--spacing-md) 0;
+  display: block;
 }
 
 .songAlbumWrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
 }
 
 .song,
 .album,
 .twitter {
   font-size: 0.75rem;
+  margin: 0;
 }
 
 .credit {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
 }
 
+/* Album cover */
 .cover {
-  min-height: 320px;
+  min-height: calc(var(--cover-size) + var(--spacing-md));
+  margin: 0;
+  padding: 0;
 }
 
 .albumCover {
-  height: 300px;
-  padding: 0.5rem;
-  width: 300px;
+  height: var(--cover-size);
+  width: var(--cover-size);
+  padding: var(--spacing-sm);
+  margin: 0 auto;
 }

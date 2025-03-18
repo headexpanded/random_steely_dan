@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Random Steely Dan lyrics in your browser" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,29 +12,28 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style.css" />
-
-    <title>Steely Dan Lyric</title>
+    <title>Random Steely Dan</title>
   </head>
   <body>
     <h1 id="title" class="title">
-      <!-- this is to tighten up the font spacing -->
       <span>STEEL</span><span class="y">Y</span><span> DAN</span>
     </h1>
     <div class="wrapper">
       <p class="intro">Your most recent random Steely Dan lyric was:</p>
-      <span id="lyric" class="lyric"></span>
+      <span id="lyric" class="lyric" aria-live="polite"></span>
       <div class="songAlbumWrapper">
-        <span id="song" class="song"></span>
-        <span id="album" class="album"></span>
+        <span id="song" class="song" aria-live="polite"></span>
+        <span id="album" class="album" aria-live="polite"></span>
       </div>
-      <span class="credit"
-        >Your rival:
+      <span class="credit">
+        Your rival:
         <a
           id="twitter"
           class="twitter"
           href="https://twitter.com/randomsteelydan"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Follow @randomsteelydan on Twitter"
           >@randomsteelydan</a
         >
       </span>
@@ -43,6 +43,7 @@
           alt="Steely Dan album cover"
           id="albumCoverImg"
           class="albumCover"
+          loading="lazy"
         />
       </div>
     </div>

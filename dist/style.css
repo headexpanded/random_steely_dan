@@ -1,63 +1,57 @@
 /* style sheet for Steely Dan pop-up */
 
-:root {
-  /* font size */
-  font-size: 16px;
-
-  /* color variables */
-  --white: #fdffff;
-  --darkText: #001429;
-
-  /* layout variables */
-  --borderRadius: 4px;
-  --padding: 8px;
-  --scale: 1.01;
-}
-
+/* Base styles */
 html {
-  background: var(--white);
+  background: #fdffff;
   min-height: 3rem;
   min-width: 22rem;
 }
 
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 img {
   max-width: 100%;
+  height: auto;
+  display: block;
 }
 
+/* Typography */
 h1 {
   font-family: "Michroma", sans-serif;
   font-size: 2rem;
-  margin-bottom: 0px;
+  margin: 0;
   text-align: center;
 }
 
 .y {
-  /* this is for the Y in the h1 - the font makes it stick out too much otherwise */
   margin-left: -0.5rem;
 }
 
+/* Layout */
 .wrapper {
-  color: var(--darkText);
+  color: #001429;
   display: flex;
   flex-direction: column;
   height: 4rem;
   margin-top: 0.25rem;
   min-width: 5rem;
   text-align: center;
+  padding: 0.5rem;
 }
 
 .intro {
-  margin-bottom: 0px;
+  margin: 0;
 }
 
 .lyric {
   font-size: 1rem;
   font-weight: 600;
-  margin: 1rem 0rem;
+  margin: 1rem 0;
+  display: block;
 }
 
 .songAlbumWrapper {
@@ -70,18 +64,23 @@ h1 {
 .album,
 .twitter {
   font-size: 0.75rem;
+  margin: 0;
 }
 
 .credit {
   margin-bottom: 0.5rem;
 }
 
+/* Album cover */
 .cover {
-  min-height: 320px;
+  min-height: calc(300px + 1rem);
+  margin: 0;
+  padding: 0;
 }
 
 .albumCover {
   height: 300px;
-  padding: 0.5rem;
   width: 300px;
+  padding: 0.5rem;
+  margin: 0 auto;
 }

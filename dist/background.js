@@ -3,16 +3,14 @@
 A Chrome extension which puts a random lyric by Steely Dan in a browser notification
 HTML, CSS, TS, JS
 
-- the extension sets an alarm every 8 hours
+- the extension sets an alarm every 7 hours
 - the alarm event listener calls the getSong function
-- getSong selects one of three queries to a HiGraph query object
-- (1st 100 results, 2nd 100 results, last 100 results: this is to get around HiGraph's 100 return limit)
 
 - getSong returns a song object, which includes:
   1/ a lyric snippet
   2/ the song from which the lyric snippet is sourced
   3/ the album upon which the song appears
-  4/ the albumId (1-9)
+  4/ the album image
 
 - the song object populates a basic Chrome browser notification with the lyric snippet
 - the song object is stored in local storage, over-writing the previously stored song object
@@ -26,103 +24,65 @@ HTML, CSS, TS, JS
     4/ the cover art of the album
 */
 const ALARM_NAME = "steelyDanItem";
-const FETCH_INTERVAL = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
+const BASE_INTERVAL = 7 * 60 * 60 * 1000; // 7 hours
+const RANDOM_OFFSET = Math.floor(Math.random() * 30 * 60 * 1000) - (15 * 60 * 1000);
+const FETCH_INTERVAL = BASE_INTERVAL + RANDOM_OFFSET; // fetch interval is between 6 hours 45 minutes and 7 hours 15 minutes
 let lastFetchTime = 0;
-const defaultSong = {
-    // in case nothing is returned from getSong() API call
-    lyric: "Shine up the battle apple.",
-    songName: "Josie",
-    album: "Aja",
-    albumId: 6,
-};
-const lyricQueries = [
-    `
-    query SteelyDanItems1st100 {
-      steelyDanItems(first: 100) {
-        lyric
-        song_name
-        album
-        albumId
-      }
-    }
-  `,
-    `
-    query SteelyDanItems2nd100 {
-      steelyDanItems(first: 100, skip:100) {
-        lyric
-        song_name
-        album
-        albumId
-      }
-    }
-  `,
-    `
-    query SteelyDanItemsLast100 {
-      steelyDanItems(last: 100) {
-        lyric
-        song_name
-        album
-        albumId
-      }
-    }
-  `,
-];
-async function getSong(queryIndex) {
+async function getSong() {
     const currentTime = Date.now();
     const elapsedTime = currentTime - lastFetchTime;
-    // get a random number between 0 and 100
-    const randomNumber = Math.floor(Math.random() * 100);
-    const query = lyricQueries[queryIndex];
     if (elapsedTime >= FETCH_INTERVAL || lastFetchTime === 0) {
         try {
-            const response = await fetch("https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/clee001xp54cz01t641jw2zv8/master", {
-                method: "POST",
+            const apiUrl = "http://45.158.140.32/random-lyric";
+            const response = await fetch(apiUrl, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
                 },
-                body: JSON.stringify({ query }),
             });
-            const songData = await response.json();
-            // HiGraph applies a long random string to each entry as an iD
-            // we can't use that to select from an array.
-            // so instead we use the random number {0..100}
-            // to select one song from the array
-            const song = songData?.data?.steelyDanItems[randomNumber];
-            lastFetchTime = currentTime;
-            return song;
+            const song = await response.json();
+            if (song) {
+                lastFetchTime = currentTime;
+                return song;
+            }
+            else {
+                return null;
+            }
         }
         catch (error) {
-            console.log("There was an error:", error);
-            return defaultSong;
+            console.log("There was a fetch error:", error);
+            return null;
         }
     }
-    return defaultSong;
+    return null;
 }
 async function getAndNotifySong() {
-    const queryIndex = Math.floor(Math.random() * lyricQueries.length);
-    const newSong = await getSong(queryIndex);
-    // If no song is found in local storage, return an empty song object
-    if (newSong && newSong.lyric) {
-        chrome.notifications.create(ALARM_NAME, {
-            type: "basic",
-            iconUrl: "img/double-helix-icon128.png",
-            title: newSong.lyric,
-            message: "",
-        });
-        chrome.storage.local.set({ songData: newSong });
+    try {
+        const newSong = await getSong();
+        if (newSong && newSong.lyric) {
+            chrome.notifications.create(ALARM_NAME, {
+                type: "basic",
+                iconUrl: "img/double-helix-icon128.png",
+                title: newSong.lyric,
+                message: "",
+            });
+            await chrome.storage.local.set({ song: newSong });
+        }
+        else {
+            console.log("Failed to fetch new song. Will try again at next interval.");
+        }
     }
-    else {
-        console.log("Failed to fetch new song.");
+    catch (error) {
+        console.error("An error occurred while fetching or storing the song data:", error);
     }
 }
-chrome.alarms.onAlarm.addListener(() => {
-    getAndNotifySong();
-    // Reset the alarm for the next time
+chrome.alarms.onAlarm.addListener(async () => {
+    await getAndNotifySong();
     chrome.alarms.create(ALARM_NAME, { when: Date.now() + FETCH_INTERVAL });
 });
-// on install:
-chrome.runtime.onInstalled.addListener(() => {
-    getAndNotifySong();
+// on installation:
+chrome.runtime.onInstalled.addListener(async () => {
     chrome.alarms.create(ALARM_NAME, { when: Date.now() + FETCH_INTERVAL });
+    await getAndNotifySong();
 });

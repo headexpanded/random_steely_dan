@@ -1,51 +1,40 @@
 "use strict";
 // Get the most recent lyric from local storage
 // Display it in the popup
-document.addEventListener('DOMContentLoaded', function () {
-    const lyricSpan = document.querySelector('#lyric');
-    const songSpan = document.querySelector('#song');
-    const albumSpan = document.querySelector('#album');
-    const albumCoverImg = (document.querySelector('#albumCoverImg'));
+document.addEventListener("DOMContentLoaded", () => {
+    const lyric = document.querySelector("#lyric");
+    const song = document.querySelector("#song");
+    const album = document.querySelector("#album");
+    const albumCover = document.querySelector("#albumCoverImg");
+    if (!lyric || !song || !album || !albumCover) {
+        console.error("Required DOM elements not found");
+        return;
+    }
     // Get locally stored song when the user clicks the extension button
-    chrome.storage.local.get('songData', function (result) {
-        if (result.songData != null) {
-            lyricSpan.textContent = result.songData.lyric;
-            songSpan.textContent = `Song: ${result.songData.songName}`;
-            albumSpan.textContent = `Album: ${result.songData.album}`;
-            const albumId = result.songData.albumId;
-            albumCoverImg.src = chrome.runtime.getURL(`/img/covers/album_cover_${albumId}.jpg`);
-            albumCoverImg.alt = getAlbumAltText(albumId);
+    chrome.storage.local.get("song", (result) => {
+        if (result.song) {
+            lyric.textContent = result.song.lyric;
+            song.textContent = `Song: ${result.song.song_title}`;
+            album.textContent = `Album: ${result.song.album_title}`;
+            albumCover.src = result.song.album_image;
+            albumCover.alt = "Steely Dan album cover art";
         }
         else {
-            lyricSpan.textContent = "Fetching your next Steely Dan lyric...";
-            songSpan.textContent = "Please wait for the next update.";
-            albumSpan.textContent = "No album info available (yet)...";
-            albumCoverImg.src = chrome.runtime.getURL('/img/covers/album_cover_6.jpg');
-            albumCoverImg.alt = 'Aja cover art';
+            lyric.textContent = "Your next Steely Dan lyric will appear here soon...";
+            song.textContent = "Please wait for the next update.";
+            album.textContent = "No album info available (yet)...";
+            albumCover.src = chrome.runtime.getURL("/img/covers/album_cover_6.jpg");
+            albumCover.alt = "Aja cover art";
         }
     });
-    function getAlbumAltText(albumId) {
-        switch (albumId) {
-            case 1:
-                return "Can't Buy A Thrill cover art";
-            case 2:
-                return 'Countdown To Ecstasy cover art';
-            case 3:
-                return 'Pretzel Logic cover art';
-            case 4:
-                return 'Katy Lied cover art';
-            case 5:
-                return 'The Royal Scam cover art';
-            case 6:
-                return 'Aja cover art';
-            case 7:
-                return 'Gaucho cover art';
-            case 8:
-                return 'Decade cover art';
-            case 9:
-                return 'Gold cover art';
-            default:
-                return 'Default cover art';
+    // Listen for changes in chrome.storage.local and update the popup if song changes
+    chrome.storage.onChanged.addListener((changes, area) => {
+        if (area === "local" && changes.song?.newValue) {
+            lyric.textContent = changes.song.newValue.lyric;
+            song.textContent = `Song: ${changes.song.newValue.song_title}`;
+            album.textContent = `Album: ${changes.song.newValue.album_title}`;
+            albumCover.src = changes.song.newValue.album_image;
+            albumCover.alt = "Steely Dan album cover art";
         }
-    }
+    });
 });

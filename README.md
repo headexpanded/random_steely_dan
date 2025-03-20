@@ -2,11 +2,13 @@
 
 ![Steely Dan cover art](https://media.graphassets.com/zXHP7H3RzWK8gzEqyJLx)
 
-A Chrome extension which displays a random Steely Dan lyric snippet as a browser notification every 8 hours.
+A Chrome extension which displays a random Steely Dan lyric snippet as a browser notification every 7 hours or so.
+
+- click the extension button to get the lyric's song, album, and album cover art.
 
 - Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/random-steely-dan/ohmpmkjhiadganahhcaakeacniikloni?hl=en-GB)
 
-- HTML, CSS, TypeScript - {noImplicitAnys: true}, GraphQL
+- HTML, CSS, TypeScript
 
 ## Contributing
 
@@ -23,5 +25,3 @@ If you discover a security vulnerability in the Random Steely Dan code, please r
 ## License
 
 Random Steely Dan is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-

@@ -1,33 +1,28 @@
 {
-  "name": "Random Steely Dan",
-  "description": "Get random Steely Dan lyrics in browser notifications! One per 8 hours. Click button for song, album, & cover art.",
-  "manifest_version": 3,
-  "version": "1.0",
-  "version_name": "1.0: 'Kid'",
-  "icons": {
-    "128": "img/double-helix-icon128.png",
-    "48": "img/double-helix-icon48.png",
-    "16": "img/double-helix-icon16.png"
-  },
-  "action": {
-    "default_title": "Random Steely Dan",
-    "default_icon": {
-      "128": "img/double-helix-icon128.png",
-      "48": "img/double-helix-icon48.png",
-      "16": "img/double-helix-icon16.png"
-    },
-    "default_popup": "popup.html"
-  },
-
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "css": ["style.css"],
-      "js": ["content.js"]
-    }
-  ],
-  "permissions": ["alarms", "notifications", "storage"],
-  "background": {
-    "service_worker": "background.js"
-  }
+	"name": "Random Steely Dan",
+	"description": "Get random Steely Dan lyrics in browser notifications! One per 7 hours. Click button for song, album, & cover art.",
+	"manifest_version": 3,
+	"version": "1.4.0",
+	"version_name": "1.4.0: 'William'",
+	"icons": {
+		"16": "img/double-helix-icon16.png",
+		"48": "img/double-helix-icon48.png",
+		"128": "img/double-helix-icon128.png"
+	},
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"16": "img/double-helix-icon16.png",
+			"48": "img/double-helix-icon48.png",
+			"128": "img/double-helix-icon128.png"
+		}
+	},
+	"permissions": [
+		"alarms",
+		"notifications",
+		"storage"
+	],
+	"background": {
+		"service_worker": "background.js"
+	}
 }

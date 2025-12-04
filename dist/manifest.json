@@ -1,6 +1,6 @@
 {
 	"name": "Random Steely Dan",
-	"description": "Get random Steely Dan lyrics in browser notifications! One every 8 hours (or thereabouts). Click button for song, album, & cover art.",
+	"description": "Get random Steely Dan lyrics in browser notifications! One every 7 hours or so. Click button for song, album, & cover art.",
 	"manifest_version": 3,
 	"version": "1.5.0",
 	"version_name": "1.5.0: 'Connie Lee'",

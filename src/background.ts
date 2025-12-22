@@ -43,7 +43,7 @@ async function getSong(): Promise<Song | null> {
 
   if (elapsedTime >= FETCH_INTERVAL || lastFetchTime === 0) {
     try {
-      const apiUrl = "http://45.158.140.32/random-lyric";
+      const apiUrl = "http://159.65.112.232/random-lyric";
       const response = await fetch(
         apiUrl,
         {
